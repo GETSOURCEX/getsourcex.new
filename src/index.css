@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --purple-primary: #5D3FD3;
+  --blue-accent: #00BFFF;
+  --text-light: #C0C0C0;
+  --background: #0a0a0a;
+  --background-dark: #0a0a0a;
+  --background-light: #0a0a0a;
+}
+
+/* Elfsight Widget Customization */
+.elfsight-app-b48b49e5-d8c6-464c-a119-301f9fafc9eb {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+}
+
+.eapps-form-floating-button {
+  background-color: #000000 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+.eapps-form-floating-button-icon {
+  fill: #ffffff !important;
+}
+
+.eapps-form-floating-button:hover {
+  transform: scale(1.05) !important;
+  background-color: #1a1a1a !important;
+}
+
+.eapps-form-floating-button-position-right {
+  right: 20px !important;
+}
+
+.eapps-form-floating-button-position-bottom {
+  bottom: 20px !important;
+}
+
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('https://fonts.cdnfonts.com/css/ethnocentric');
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[#0a0a0a] text-white font-sans antialiased;
+}
+
+.logo-text {
+  font-family: 'Ethnocentric', sans-serif;
+  @apply text-xl font-black tracking-wider;
+}
+
+.logo-x {
+  @apply text-[#00BFFF] italic font-black text-2xl ml-1;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+  transform: skewX(-10deg);
+  display: inline-block;
+}
+
+.hero-heading {
+  @apply text-4xl md:text-[4.5rem] font-bold text-white;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: visible !important;
+  white-space: normal !important;
+  padding-right: 0.1em !important;
+  text-align: left;
+}
+
+.hero-subheading {
+  font-family: 'Space Grotesk', 'Roboto Mono', monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #2563EB, #4F46E5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  max-width: 650px;
+  font-feature-settings: "ss01" on;
+  position: relative;
+  z-index: 2;
+}
+
+.gradient-blue {
+  background: linear-gradient(90deg, #6F00FF, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-style: italic;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.2em;
+  display: inline-block;
+  overflow: visible !important;
+  line-height: 1.1;
+  transform: skewX(-10deg);
+  padding-right: 0.1em !important;
+}
+
+/* ENHANCED SUBHEADING TYPOGRAPHY */
+.enhanced-subheading {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: #d1d5db; /* Light gray for dark theme */
+  margin-bottom: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.enhanced-subheading-small {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #9ca3af; /* Slightly lighter gray */
+  margin-bottom: 0.75rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Service Title Subheadings */
+.service-title-subheading {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 1.375rem; /* 22px */
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Industry Description Subheadings */
+.industry-description-subheading {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1rem; /* 16px */
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Value Proposition Subheadings */
+.value-proposition-subheading {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section-heading {
+  @apply text-4xl font-bold text-center mb-8;
+  line-height: 1.6;
+  padding: 0.3em 0;
+  overflow: visible !important;
+  white-space: normal !important;
+  padding-right: 0.1em !important;
+}
+
+.section-subheading {
+  @apply text-[#C0C0C0] text-xl max-w-[720px] mx-auto text-center leading-relaxed mb-8;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply px-8 py-4 bg-[#5D3FD3] text-white font-semibold rounded-xl 
+         shadow-[0_4px_20px_rgba(93,63,211,0.3)] hover:bg-[#4c32ac] 
+         hover:shadow-[0_4px_25px_rgba(93,63,211,0.4)] 
+         transition-all duration-300 transform hover:scale-105;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-secondary {
+  @apply px-8 py-4 border-2 border-[#5D3FD3] text-[#5D3FD3] font-semibold 
+         rounded-xl hover:bg-[#5D3FD3] hover:text-white 
+         transition-all duration-300;
+  position: relative;
+  z-index: 2;
+}
+
+/* Card Styles */
+.card {
+  @apply bg-[#0a0a0a] p-8 rounded-xl border border-[#5D3FD3]/20 
+         shadow-[0_0_20px_rgba(93,63,211,0.2)] 
+         hover:shadow-[0_0_30px_rgba(93,63,211,0.3)] 
+         transition-all duration-300 hover:scale-[1.02] 
+         hover:border-[#5D3FD3]/40;
+}
+
+/* Value Cards */
+.value-card {
+  @apply bg-[#0a0a0a] p-8 rounded-xl border border-blue-500/20 
+         shadow-[0_0_20px_rgba(59,130,246,0.3)] 
+         hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] 
+         transition-all duration-300;
+}
+
+/* Modal Backgrounds */
+.modal-bg {
+  @apply bg-[#0a0a0a] border border-white/10;
+}
+
+/* Remove section dividers */
+.section {
+  border: none !important;
+}
+
+section {
+  border: none !important;
+}
+
+footer {
+  border: none !important;
+}
+
+/* Fix heading clipping */
+h1, h2, h3, h4, h5, h6 {
+  overflow: visible !important;
+  white-space: normal !important;
+  padding-right: 0.1em !important;
+}
+
+/* Hero Section Specific Alignment */
+.hero-section {
+  text-align: left;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .hero-heading {
+    @apply text-3xl;
+    line-height: 1.2;
+    text-align: left;
+  }
+  
+  .section-heading {
+    @apply text-3xl;
+    line-height: 1.6;
+    padding: 0.3em 0;
+  }
+  
+  .section-subheading {
+    @apply text-lg;
+  }
+
+  .enhanced-subheading {
+    font-size: 1.125rem; /* 18px on mobile */
+    line-height: 1.5;
+    text-align: left;
+  }
+  
+  .enhanced-subheading-small {
+    font-size: 1rem; /* 16px on mobile */
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .service-title-subheading {
+    font-size: 1.25rem; /* 20px on mobile */
+    line-height: 1.4;
+  }
+
+  .value-proposition-subheading {
+    font-size: 1.25rem; /* 20px on mobile */
+    line-height: 1.4;
+  }
+
+  /* Mobile Hero Section Alignment */
+  .hero-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .hero-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* Mobile Button Stacking */
+  .hero-section .flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-section button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Desktop specific adjustments */
+@media (min-width: 769px) {
+  .hero-section {
+    padding-left: 2rem;
+  }
+}
