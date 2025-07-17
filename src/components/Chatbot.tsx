@@ -365,21 +365,21 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
           </div>
 
          {/* Onboarding Form */}
-{!isUserIdentified ? (
-  <div className="flex-1 flex flex-col justify-center p-6 space-y-4 overflow-y-auto">
-    <div className="text-center mb-6">
-      <img 
-        src={MayaAvatar} 
-        alt="Maya" 
-        className="w-16 h-16 rounded-full mx-auto mb-4 border-4 border-blue-100 dark:border-blue-900 shadow-lg"
-      />
-      <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-        Hi! I'm Maya 👋
-      </h3>
-      <p className="text-gray-600 dark:text-gray-300 text-sm">
-        Your AI assistant powered by SourceX. Let's get started with a quick introduction.
-      </p>
-    </div>
+            {!isUserIdentified ? (
+            <div className="flex-1 flex flex-col justify-center p-6 space-y-4 overflow-y-auto">
+              <div className="text-center mb-6">
+                <img 
+                  src={MayaAvatar} 
+                  alt="Maya" 
+                  className="w-16 h-16 rounded-full mx-auto mb-4 border-4 border-blue-100 dark:border-blue-900 shadow-lg"
+                />
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                  Hi! I'm Maya 👋
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Your AI assistant powered by SourceX. Let's get started with a quick introduction.
+                </p>
+              </div>
 
     {/* ✅ Wrap inputs in a <form> */}
     <form
@@ -429,7 +429,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     </form>
   </div>
 ) : null}
-
             <>
               {/* Chat Messages */}
               <div 
