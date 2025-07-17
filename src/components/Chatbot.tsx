@@ -290,7 +290,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   aria-label="Open Maya Chat Assistant"
 >
   <img
-    src="/maya.png"
+    src={MayaAvatar}
     alt="Chat with Maya"
     className="w-full h-full object-cover"
   />
