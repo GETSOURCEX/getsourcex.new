@@ -473,7 +473,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
               </div>
   
             </div>
-            <>
               {/* Chat Messages */}
               <div 
                 ref={chatRef} 
