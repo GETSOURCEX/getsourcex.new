@@ -285,18 +285,23 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
       {/* Floating Button */}
       {!open && (
         <button
-          onClick={() => setOpen(true)}
-          className="group relative bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 text-white"
-          aria-label="Open Maya Chat Assistant"
-        >
-          <MessageCircle className="w-6 h-6" />
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-          
-          {/* Tooltip */}
-          <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-            Chat with Maya
-          </div>
-        </button>
+  onClick={() => setOpen(true)}
+  className="group relative w-16 h-16 rounded-full overflow-hidden shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300"
+  aria-label="Open Maya Chat Assistant"
+>
+  <img
+    src="/maya.png"
+    alt="Chat with Maya"
+    className="w-full h-full object-cover"
+  />
+  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+
+  {/* Tooltip */}
+  <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+    Chat with Maya
+  </div>
+</button>
+
       )}
 
       {/* Chat Window */}
