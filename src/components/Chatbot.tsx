@@ -563,8 +563,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 </p>
               </div>
             </>
-          )}
-        </div>
+         </div>
       )}
 
       <style jsx>{`
