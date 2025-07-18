@@ -302,6 +302,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   </div>
 </button>
 
+
       )}
 
       {/* Chat Window */}
@@ -364,115 +365,63 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
             </div>
           </div>
 
-         {/* Onboarding Form */}
-  
+          {/* Onboarding Form */}
           {!isUserIdentified ? (
-  
             <div className="flex-1 flex flex-col justify-center p-6 space-y-4 overflow-y-auto">
-  
               <div className="text-center mb-6">
-  
                 <img 
-  
                   src={MayaAvatar} 
-  
                   alt="Maya" 
-  
                   className="w-16 h-16 rounded-full mx-auto mb-4 border-4 border-blue-100 dark:border-blue-900 shadow-lg"
-  
                 />
-  
                 <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-  
                   Hi! I'm Maya 👋
-  
                 </h3>
-  
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
-  
                   Your AI assistant powered by SourceX. Let's get started with a quick introduction.
-  
                 </p>
-  
               </div>
-  
 
-  
               <div className="space-y-4">
-  
                 <div>
-  
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-  
                     Full Name *
-  
                   </label>
-  
                   <input
-  
                     type="text"
-  
                     placeholder="Enter your full name"
-  
                     value={name}
-  
                     onChange={(e) => setName(e.target.value)}
-  
                     className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
-  
                     autoFocus
-  
                   />
-  
                 </div>
-  
                 
-  
                 <div>
-  
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-  
                     Email Address *
-  
                   </label>
-  
                   <input
-  
                     type="email"
-  
                     placeholder="Enter your email address"
-  
                     value={email}
-  
                     onChange={(e) => setEmail(e.target.value)}
-  
                     className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
-  
                   />
-  
                 </div>
-  
                 
-  
                 <button
-  
                   onClick={startChat}
-  
                   disabled={!name.trim() || !email.includes('@')}
-  
                   className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
-  
                 >
-  
                   <Zap className="w-4 h-4" />
-  
                   Start Chatting with Maya
-  
                 </button>
-  
               </div>
-  
             </div>
+          ) : (
+            <>
               {/* Chat Messages */}
               <div 
                 ref={chatRef} 
@@ -556,7 +505,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                       >
                         {suggestion}
                       </button>
-                    )}
+                    ))}
                   </div>
                 </div>
               )}
@@ -606,7 +555,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 </p>
               </div>
             </>
-         </div>
+          )}
+        </div>
       )}
 
       <style jsx>{`
