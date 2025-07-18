@@ -279,6 +279,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   };
 
   const isUserIdentified = name && email.includes('@');
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
@@ -382,43 +383,49 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter your full name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
-                    autoFocus
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
-                  />
-                </div>
-                
-                <button
-                  onClick={startChat}
-                  disabled={!name.trim() || !email.includes('@')}
-                  className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  <Zap className="w-4 h-4" />
-                  Start Chatting with Maya
-                </button>
-              </div>
+<div className="space-y-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Full Name *
+    </label>
+    <input
+      type="text"
+      placeholder="Enter your full name"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
+      autoFocus
+    />
+    {!name.trim() && (
+      <p className="text-red-500 text-sm mt-1">Please enter your name.</p>
+    )}
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Email Address *
+    </label>
+    <input
+      type="email"
+      placeholder="Enter your email address"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
+    />
+    {email && !isValidEmail(email) && (
+      <p className="text-red-500 text-sm mt-1">Please enter a valid email.</p>
+    )}
+  </div>
+
+  <button
+    onClick={startChat}
+    disabled={!name.trim() || !isValidEmail(email)}
+    className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
+  >
+    <Zap className="w-4 h-4" />
+    Start Chatting with Maya
+  </button>
+</div>
             </div>
           ) : (
             <>
