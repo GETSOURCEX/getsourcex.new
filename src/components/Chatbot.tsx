@@ -278,7 +278,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     return name.charAt(0).toUpperCase() || 'U';
   };
 
-  const isUserIdentified = name && email.includes('@');
+  const isUserIdentified = name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
