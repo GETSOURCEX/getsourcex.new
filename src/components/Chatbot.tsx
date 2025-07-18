@@ -278,8 +278,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     return name.charAt(0).toUpperCase() || 'U';
   };
 
-  const isUserIdentified = name && email.includes('@');
-  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
