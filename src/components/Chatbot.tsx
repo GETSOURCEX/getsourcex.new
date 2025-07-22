@@ -383,7 +383,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 </p>
               </div>
 
-<div className="space-y-4">
+<form
+  onSubmit={(e) => e.preventDefault()}
+  className="space-y-4"
+>
   <div>
     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
       Full Name *
@@ -393,8 +396,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
       placeholder="Enter your full name"
       value={name}
       onChange={(e) => setName(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') e.preventDefault();
+      }}
       className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
       autoFocus
+      autoComplete="name"
+      name="name"
     />
     {!name.trim() && (
       <p className="text-red-500 text-sm mt-1">Please enter your name.</p>
@@ -410,7 +418,17 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
       placeholder="Enter your email address"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
+      onKeyDown={(e) => {
+        // Prevent email domain suggestions (like @gmail.com) triggering auto-submit
+        if (e.key === 'Enter' || e.key === '@' || e.key === '.') e.preventDefault();
+      }}
+      onBlur={() => {
+        // prevent auto-start unless user confirms explicitly via Start button
+        if (!isValidEmail(email)) return;
+      }}
       className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
+      autoComplete="email"
+      name="email"
     />
     {email && !isValidEmail(email) && (
       <p className="text-red-500 text-sm mt-1">Please enter a valid email.</p>
@@ -418,6 +436,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   </div>
 
   <button
+    type="button"
     onClick={startChat}
     disabled={!name.trim() || !isValidEmail(email)}
     className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
@@ -425,7 +444,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     <Zap className="w-4 h-4" />
     Start Chatting with Maya
   </button>
-</div>
+</form>
             </div>
           ) : (
             <>
