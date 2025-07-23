@@ -230,7 +230,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   };
 
   const startChat = () => {
-    if (name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
 
     localStorage.setItem(NAME_KEY, name);
     localStorage.setItem(EMAIL_KEY, email);
