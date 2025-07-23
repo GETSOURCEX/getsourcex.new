@@ -5,26 +5,17 @@ import React, {
   KeyboardEvent,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  MessageCircle,
-  X,
-  Maximize2,
-  Minimize2,
-  Moon,
-  Sun,
-  RotateCcw,
-  Send,
-  Zap,
-} from 'lucide-react';
+import { MessageCircle, X, Maximize2, Minimize2, Moon, Sun, RotateCcw, Send, Zap } from 'lucide-react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import MayaAvatar from '../assets/maya.png';
 
 const CHAT_KEY = 'sourcex-chat';
 const NAME_KEY = 'sourcex-user-name';
 const EMAIL_KEY = 'sourcex-user-email';
-const PHONE_KEY = 'sourcex-user-phone';
 const SESSION_KEY = 'sourcex-session-id';
 const THEME_KEY = 'sourcex-chat-theme';
-const CHATBOT_ENDPOINT = 'https://sourcex-chatbot-proxy.onrender.com/chatbot';
 
 const suggestions: string[] = [
   'What AI automation services does SourceX offer?',
@@ -45,16 +36,12 @@ interface ChatbotProps {
   className?: string;
 }
 
-const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const isValidPhone = (phone: string) => /^\d{7,15}$/.test(phone);
-
 const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [dark, setDark] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState('');
@@ -66,6 +53,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   const chatRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  // Initialize component
   useEffect(() => {
     const savedMessages = localStorage.getItem(CHAT_KEY);
     if (savedMessages) {
@@ -75,14 +63,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
         console.warn('Failed to parse saved messages');
       }
     }
+
     const storedName = localStorage.getItem(NAME_KEY);
     const storedEmail = localStorage.getItem(EMAIL_KEY);
-    const storedPhone = localStorage.getItem(PHONE_KEY);
     const storedTheme = localStorage.getItem(THEME_KEY);
-
+    
     if (storedName) setName(storedName);
     if (storedEmail) setEmail(storedEmail);
-    if (storedPhone) setPhone(storedPhone);
     if (storedTheme === 'dark') setDark(true);
 
     let existingSession = localStorage.getItem(SESSION_KEY);
@@ -92,9 +79,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
     setSessionId(existingSession);
 
+    // Online/offline detection
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
-
+    
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
@@ -104,27 +92,47 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     };
   }, []);
 
+  // Auto-scroll to bottom
   useEffect(() => {
     if (chatRef.current) {
-      chatRef.current.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' });
+      chatRef.current.scrollTo({
+        top: chatRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages, isTyping]);
 
+  // Save messages to localStorage
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
     }
   }, [messages]);
 
+  // Save theme preference
   useEffect(() => {
     localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
   }, [dark]);
 
+  // Focus input when chat opens
   useEffect(() => {
     if (open && inputRef.current && name && email) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [open, name, email]);
+
+  const simulateTyping = (text: string, callback: (char: string) => void) => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        callback(text[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 30);
+    return interval;
+  };
 
   const handleSend = async () => {
     if (!message.trim() || loading) return;
@@ -157,23 +165,38 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
       return;
     }
 
-    const payload = { message: userMsg.text, name, email, sessionId };
+    const payload = {
+      message: userMsg.text,
+      name,
+      email,
+      sessionId,
+    };
 
     try {
-      const res = await fetch(CHATBOT_ENDPOINT, {
+      const res = await fetch('https://sourcex-chatbot-proxy.onrender.com/chatbot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
 
       const data = await res.json();
-      const replyText =
-        typeof data === 'string'
-          ? data
-          : data.reply?.message || data.reply?.text || data.reply || data.message || data.text || 'I received your message!';
+      
+      let replyText: string;
+      if (typeof data === 'string') {
+        replyText = data;
+      } else if (data.reply) {
+        replyText = typeof data.reply === 'string' 
+          ? data.reply 
+          : data.reply.message || data.reply.text || 'I received your message!';
+      } else {
+        replyText = data.message || data.text || 'I received your message!';
+      }
 
+      // Simulate typing delay
       setTimeout(() => {
         const botMsg: Message = {
           id: uuidv4(),
@@ -184,6 +207,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
         setMessages((prev) => [...prev, botMsg]);
         setIsTyping(false);
       }, Math.random() * 1000 + 500);
+
     } catch (error) {
       console.error('Chat API error:', error);
       setTimeout(() => {
@@ -208,60 +232,59 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
   };
 
-  const startChat = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !isValidEmail(email) || !isValidPhone(phone)) return;
-
-    localStorage.setItem(NAME_KEY, name);
-    localStorage.setItem(EMAIL_KEY, email);
-    localStorage.setItem(PHONE_KEY, phone);
-
-    setLoading(true);
-    const newSessionId = uuidv4();
-    setSessionId(newSessionId);
-    localStorage.setItem(SESSION_KEY, newSessionId);
-
-    try {
-      await fetch(CHATBOT_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, sessionId: newSessionId })
-      });
-
-      setMessages([{
-        id: uuidv4(),
-        sender: 'bot',
-        text: `👋 Welcome, ${name}! I'm Maya, your AI assistant powered by SourceX. I'm here to help you discover how AI automation can transform your business. What would you like to know?`,
-        timestamp: Date.now()
-      }]);
-
-      setShowSuggestions(true);
-    } catch (err) {
-      console.error('Submission error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resetChat = () => {
+    const resetChat = () => {
     if (confirm('Are you sure you want to reset the conversation? This will clear all messages and user data.')) {
       localStorage.removeItem(CHAT_KEY);
       localStorage.removeItem(NAME_KEY);
       localStorage.removeItem(EMAIL_KEY);
-      localStorage.removeItem(PHONE_KEY);
       localStorage.removeItem(SESSION_KEY);
-
+      
       setMessages([]);
       setName('');
       setEmail('');
-      setPhone('');
       setSessionId(uuidv4());
       setShowSuggestions(true);
+      
+      // Generate new session
+      const newSession = uuidv4();
+      localStorage.setItem(SESSION_KEY, newSession);
+      setSessionId(newSession);
     }
   };
 
-  const getUserInitial = () => name.charAt(0).toUpperCase() || 'U';
-  const isUserIdentified = name.trim() !== '' && isValidEmail(email) && isValidPhone(phone);
+  const handleSuggestionClick = (suggestion: string) => {
+    setMessage(suggestion);
+    setShowSuggestions(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const getUserInitial = () => {
+    return name.charAt(0).toUpperCase() || 'U';
+  };
+
+  
+  const formSchema = z.object({
+  name: z.string().min(1, { message: "Full name is required." }),
+  email: z.string().email({ message: "Please enter a valid email." }),
+  phone: z
+    .string()
+    .min(7, { message: "Phone number must be at least 7 digits." })
+    .max(15, { message: "Phone number must be no more than 15 digits." })
+    .regex(/^[0-9]+$/, { message: "Phone number must be numeric only." }),
+});
+
+const form = useForm<z.infer<typeof formSchema>>({
+  resolver: zodResolver(formSchema),
+  defaultValues: {
+    name: '',
+    email: '',
+    phone: '',
+  },
+  mode: 'onChange',
+});
+
 
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
@@ -349,36 +372,97 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
           </div>
 
           {/* Onboarding Form */}
-         {!isUserIdentified ? (
-            <form onSubmit={startChat} className="flex-1 flex flex-col justify-center p-6 space-y-4 overflow-y-auto">
+          {!isUserIdentified ? (
+            <div className="flex-1 flex flex-col justify-center p-6 space-y-4 overflow-y-auto">
               <div className="text-center mb-6">
-                <img src={MayaAvatar} alt="Maya" className="w-16 h-16 rounded-full mx-auto mb-4 border-4 border-blue-100 dark:border-blue-900 shadow-lg" />
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Hi! I'm Maya 👋</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">Your AI assistant powered by SourceX. Let's get started with a quick introduction.</p>
+                <img 
+                  src={MayaAvatar} 
+                  alt="Maya" 
+                  className="w-16 h-16 rounded-full mx-auto mb-4 border-4 border-blue-100 dark:border-blue-900 shadow-lg"
+                />
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                  Hi! I'm Maya 👋
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Your AI assistant powered by SourceX. Let's get started with a quick introduction.
+                </p>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your full name" className="w-full border p-3 rounded-lg bg-white dark:bg-gray-800 dark:text-white" required />
-              </div>
+<form
+  onSubmit={form.handleSubmit((data) => {
+    setName(data.name);
+    setEmail(data.email);
+    localStorage.setItem(NAME_KEY, data.name);
+    localStorage.setItem(EMAIL_KEY, data.email);
+    // optionally save phone here
+    const welcomeMsg: Message = {
+      id: uuidv4(),
+      sender: 'bot',
+      text: `👋 Welcome, ${data.name}! I'm Maya, your AI assistant powered by SourceX. I'm here to help you discover how AI automation can transform your business. What would you like to know?`,
+      timestamp: Date.now(),
+    };
+    setMessages([welcomeMsg]);
+    setShowSuggestions(true);
+  })}
+  className="space-y-4"
+>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Full Name *
+    </label>
+    <input
+      {...form.register('name')}
+      placeholder="Enter your full name"
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg"
+      autoComplete="name"
+    />
+    <p className="text-red-500 text-sm mt-1">
+      {form.formState.errors.name?.message}
+    </p>
+  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" className="w-full border p-3 rounded-lg bg-white dark:bg-gray-800 dark:text-white" required />
-                {email && !isValidEmail(email) && <p className="text-red-500 text-sm mt-1">Please enter a valid email.</p>}
-              </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Email Address *
+    </label>
+    <input
+      {...form.register('email')}
+      type="email"
+      placeholder="Enter your email"
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg"
+      autoComplete="email"
+    />
+    <p className="text-red-500 text-sm mt-1">
+      {form.formState.errors.email?.message}
+    </p>
+  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number *</label>
-                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter your phone number" className="w-full border p-3 rounded-lg bg-white dark:bg-gray-800 dark:text-white" required />
-                {phone && !isValidPhone(phone) && <p className="text-red-500 text-sm mt-1">Enter a valid phone number (7-15 digits).</p>}
-              </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Phone Number *
+    </label>
+    <PhoneInput
+      international
+      defaultCountry="US"
+      value={form.watch('phone')}
+      onChange={(val) => form.setValue('phone', val)}
+      className="your-custom-class"
+    />
+    <p className="text-red-500 text-sm mt-1">
+      {form.formState.errors.phone?.message}
+    </p>
+  </div>
 
-              <button type="submit" disabled={loading || !name.trim() || !isValidEmail(email) || !isValidPhone(phone)} className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2">
-                <Zap className="w-4 h-4" />
-                {loading ? 'Starting...' : 'Start Chatting with Maya'}
-              </button>
-            </form>
+  <button
+    type="submit"
+    disabled={!form.formState.isValid}
+    className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
+  >
+    <Zap className="w-4 h-4" />
+    Start Chatting with Maya
+  </button>
+</form>
+         </div>
           ) : (
             <>
               {/* Chat Messages */}
