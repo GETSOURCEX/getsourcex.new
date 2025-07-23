@@ -1,22 +1,34 @@
+// Chatbot.tsx - Main chatbot component with onboarding form and conversation logic
 import React, {
   useEffect,
   useRef,
   useState,
   KeyboardEvent,
 } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { v4 as uuidv4 } from 'uuid';
-import { MessageCircle, X, Maximize2, Minimize2, Moon, Sun, RotateCcw, Send, Zap } from 'lucide-react';
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import {
+  X,
+  Maximize2,
+  Minimize2,
+  Moon,
+  Sun,
+  RotateCcw,
+  Send,
+  Zap,
+} from 'lucide-react';
 import MayaAvatar from '../assets/maya.png';
 
+// Local storage keys
 const CHAT_KEY = 'sourcex-chat';
 const NAME_KEY = 'sourcex-user-name';
 const EMAIL_KEY = 'sourcex-user-email';
 const SESSION_KEY = 'sourcex-session-id';
 const THEME_KEY = 'sourcex-chat-theme';
 
+// Default question suggestions
 const suggestions: string[] = [
   'What AI automation services does SourceX offer?',
   'How can AI help my business grow?',
@@ -25,6 +37,7 @@ const suggestions: string[] = [
   'What industries do you serve?',
 ];
 
+// Message type definition
 interface Message {
   id: string;
   sender: 'user' | 'bot';
@@ -32,11 +45,24 @@ interface Message {
   timestamp: number;
 }
 
+// Props interface for optional classname
 interface ChatbotProps {
   className?: string;
 }
 
+// Zod schema for onboarding form validation
+const formSchema = z.object({
+  name: z.string().min(1, { message: 'Full name is required.' }),
+  email: z.string().email({ message: 'Please enter a valid email.' }),
+  phone: z
+    .string()
+    .min(7, { message: 'Phone number must be at least 7 digits.' })
+    .max(15, { message: 'Phone number must be no more than 15 digits.' })
+    .regex(/^[0-9]+$/, { message: 'Phone number must be numeric only.' }),
+});
+
 const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
+  // Core state for chatbot
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -50,10 +76,22 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showSuggestions, setShowSuggestions] = useState(true);
 
+  // Refs for auto-scroll and input focus
   const chatRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Initialize component
+  // React Hook Form setup with Zod schema
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+    },
+    mode: 'onChange',
+  });
+
+  // Load saved state from localStorage on mount
   useEffect(() => {
     const savedMessages = localStorage.getItem(CHAT_KEY);
     if (savedMessages) {
@@ -67,11 +105,12 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     const storedName = localStorage.getItem(NAME_KEY);
     const storedEmail = localStorage.getItem(EMAIL_KEY);
     const storedTheme = localStorage.getItem(THEME_KEY);
-    
+
     if (storedName) setName(storedName);
     if (storedEmail) setEmail(storedEmail);
     if (storedTheme === 'dark') setDark(true);
 
+    // Generate or retrieve session ID
     let existingSession = localStorage.getItem(SESSION_KEY);
     if (!existingSession) {
       existingSession = uuidv4();
@@ -79,20 +118,18 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
     setSessionId(existingSession);
 
-    // Online/offline detection
+    // Track online/offline state
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
-    
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
-  // Auto-scroll to bottom
+  // Auto-scroll chat to bottom when messages change
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTo({
@@ -102,7 +139,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
   }, [messages, isTyping]);
 
-  // Save messages to localStorage
+  // Persist messages to localStorage
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
@@ -114,26 +151,14 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
   }, [dark]);
 
-  // Focus input when chat opens
+  // Auto-focus input when chat opens
   useEffect(() => {
     if (open && inputRef.current && name && email) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [open, name, email]);
 
-  const simulateTyping = (text: string, callback: (char: string) => void) => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < text.length) {
-        callback(text[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 30);
-    return interval;
-  };
-
+  // Submit user message to backend and handle bot reply
   const handleSend = async () => {
     if (!message.trim() || loading) return;
 
@@ -179,24 +204,19 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      
-      let replyText: string;
-      if (typeof data === 'string') {
-        replyText = data;
-      } else if (data.reply) {
-        replyText = typeof data.reply === 'string' 
-          ? data.reply 
-          : data.reply.message || data.reply.text || 'I received your message!';
-      } else {
-        replyText = data.message || data.text || 'I received your message!';
-      }
 
-      // Simulate typing delay
+      let replyText: string;
+      if (typeof data === 'string') replyText = data;
+      else if (data.reply)
+        replyText =
+          typeof data.reply === 'string'
+            ? data.reply
+            : data.reply.message || data.reply.text || 'I received your message!';
+      else replyText = data.message || data.text || 'I received your message!';
+
+      // Simulate typing delay for UX polish
       setTimeout(() => {
         const botMsg: Message = {
           id: uuidv4(),
@@ -207,14 +227,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
         setMessages((prev) => [...prev, botMsg]);
         setIsTyping(false);
       }, Math.random() * 1000 + 500);
-
     } catch (error) {
       console.error('Chat API error:', error);
       setTimeout(() => {
         const errorMsg: Message = {
           id: uuidv4(),
           sender: 'bot',
-          text: '❌ Sorry, I encountered an error. Please try again or contact support if the issue persists.',
+          text: '❌ Sorry, I encountered an error. Please try again or contact support.',
           timestamp: Date.now(),
         };
         setMessages((prev) => [...prev, errorMsg]);
@@ -225,6 +244,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
   };
 
+  // Send on Enter key press (except Shift+Enter)
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -232,59 +252,31 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     }
   };
 
-    const resetChat = () => {
-    if (confirm('Are you sure you want to reset the conversation? This will clear all messages and user data.')) {
+  // Clear all session/user data and restart
+  const resetChat = () => {
+    if (confirm('Are you sure you want to reset the conversation?')) {
       localStorage.removeItem(CHAT_KEY);
       localStorage.removeItem(NAME_KEY);
       localStorage.removeItem(EMAIL_KEY);
       localStorage.removeItem(SESSION_KEY);
-      
       setMessages([]);
       setName('');
       setEmail('');
       setSessionId(uuidv4());
       setShowSuggestions(true);
-      
-      // Generate new session
       const newSession = uuidv4();
       localStorage.setItem(SESSION_KEY, newSession);
       setSessionId(newSession);
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setMessage(suggestion);
-    setShowSuggestions(false);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
+  // Get first character of user name for avatar
   const getUserInitial = () => {
     return name.charAt(0).toUpperCase() || 'U';
   };
 
-  
-  const formSchema = z.object({
-  name: z.string().min(1, { message: "Full name is required." }),
-  email: z.string().email({ message: "Please enter a valid email." }),
-  phone: z
-    .string()
-    .min(7, { message: "Phone number must be at least 7 digits." })
-    .max(15, { message: "Phone number must be no more than 15 digits." })
-    .regex(/^[0-9]+$/, { message: "Phone number must be numeric only." }),
-});
-
-const form = useForm<z.infer<typeof formSchema>>({
-  resolver: zodResolver(formSchema),
-  defaultValues: {
-    name: '',
-    email: '',
-    phone: '',
-  },
-  mode: 'onChange',
-});
-
+  // Check if user provided valid name/email to begin chat
+  const isUserIdentified = name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
