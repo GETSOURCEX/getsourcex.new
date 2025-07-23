@@ -38,8 +38,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [dark, setDark] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState('');
@@ -231,8 +229,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   };
 
   const startChat = () => {
-    if (!name.trim() || !email.includes('@')) return;
-
+    
     localStorage.setItem(NAME_KEY, name);
     localStorage.setItem(EMAIL_KEY, email);
 
@@ -280,6 +277,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   };
 
   const isUserIdentified = false;
+  const isUserIdentified = messages.length > 0;
   
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
@@ -381,11 +379,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   Your AI assistant powered by SourceX. Let's get started with a quick introduction.
                 </p>
-                <ChatbotOnboarding
+                </div>
+              <ChatbotOnboarding
                   setMessages={setMessages}
                   setShowSuggestions={setShowSuggestions}
-                />
-              </div>
+              />
           ) : (
             <>
               {/* Chat Messages */}
