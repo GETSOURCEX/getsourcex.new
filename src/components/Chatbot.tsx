@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MessageCircle, X, Maximize2, Minimize2, Moon, Sun, RotateCcw, Send, Zap } from 'lucide-react';
-import ChatbotOnboarding from './ChatbotOnboarding';
 import MayaAvatar from '../assets/maya.png';
 
 const CHAT_KEY = 'sourcex-chat';
@@ -38,6 +37,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [dark, setDark] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState('');
@@ -229,7 +230,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
   };
 
   const startChat = () => {
-    
+    if (name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
     localStorage.setItem(NAME_KEY, name);
     localStorage.setItem(EMAIL_KEY, email);
 
@@ -276,9 +278,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
     return name.charAt(0).toUpperCase() || 'U';
   };
 
-  const isUserIdentified = false;
-  const isUserIdentified = messages.length > 0;
-  
+  const isUserIdentified = name.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   return (
     <div className={`fixed ${fullscreen ? 'inset-0' : 'bottom-6 right-6'} z-50 ${className}`}>
       {/* Floating Button */}
@@ -379,11 +381,71 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   Your AI assistant powered by SourceX. Let's get started with a quick introduction.
                 </p>
-                </div>
-              <ChatbotOnboarding
-                  setMessages={setMessages}
-                  setShowSuggestions={setShowSuggestions}
-              />
+              </div>
+
+<form
+  onSubmit={(e) => e.preventDefault()}
+  className="space-y-4"
+>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Full Name *
+    </label>
+    <input
+      type="text"
+      placeholder="Enter your full name"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') e.preventDefault();
+      }}
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
+      autoFocus
+      autoComplete="name"
+      name="name"
+    />
+    {!name.trim() && (
+      <p className="text-red-500 text-sm mt-1">Please enter your name.</p>
+    )}
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      Email Address *
+    </label>
+    <input
+      type="email"
+      placeholder="Enter your email address"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      onKeyDown={(e) => {
+        // Prevent email domain suggestions (like @gmail.com) triggering auto-submit
+        if (e.key === 'Enter' || e.key === '@' || e.key === '.') e.preventDefault();
+      }}
+      onBlur={() => {
+        // prevent auto-start unless user confirms explicitly via Start button
+        if (!isValidEmail(email)) return;
+      }}
+      className="w-full border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-800/80 text-gray-900 dark:text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 backdrop-blur-sm"
+      autoComplete="email"
+      name="email"
+    />
+    {email && !isValidEmail(email) && (
+      <p className="text-red-500 text-sm mt-1">Please enter a valid email.</p>
+    )}
+  </div>
+
+  <button
+    type="button"
+    onClick={startChat}
+    disabled={!name.trim() || !isValidEmail(email)}
+    className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
+  >
+    <Zap className="w-4 h-4" />
+    Start Chatting with Maya
+  </button>
+</form>
+            </div>
           ) : (
             <>
               {/* Chat Messages */}
@@ -521,7 +583,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
             </>
           )}
         </div>
-    
+      )}
+
       <style jsx>{`
         .animate-in {
           animation: slideInUp 0.3s ease-out;
