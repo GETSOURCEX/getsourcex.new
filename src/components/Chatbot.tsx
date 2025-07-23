@@ -523,8 +523,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ className = '' }) => {
             </>
           )}
         </div>
-      )}
-
+    
       <style jsx>{`
         .animate-in {
           animation: slideInUp 0.3s ease-out;
