@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, Linkedin, MapPin, Globe } from 'lucide-react';
 import PolicyModal from './PolicyModal';
+import Logo from '../assets/FINAL LOGO .png';
 
 const Footer = () => {
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
@@ -13,9 +14,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div>
-            <h3 className="logo-text mb-6">
-              SOURCE<span className="logo-x">X</span>
-            </h3>
+            <img
+              src={Logo}
+              alt="Source X - AI Business Automation"
+              className="h-10 w-auto object-contain mb-6"
+            />
             <p className="text-[#d1d5db] mb-6">
               North America's leading AI business automation agency transforming businesses with intelligent automation solutions across 15+ countries.
             </p>

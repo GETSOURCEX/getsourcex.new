@@ -17,6 +17,7 @@ import ContactPage from './pages/ContactPage';
 import ConsultationPage from './pages/ConsultationPage';
 import HomePage from './pages/HomePage';
 import Chatbot from './components/Chatbot';
+import Logo from './assets/FINAL LOGO .png';
 
 const App = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -43,9 +44,11 @@ const App = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="hover:opacity-90 transition-opacity cursor-pointer">
-              <span className="logo-text">
-                SOURCE<span className="logo-x">X</span>
-              </span>
+              <img
+                src={Logo}
+                alt="Source X - AI Business Automation"
+                className="h-10 md:h-12 w-auto object-contain"
+              />
             </Link>
 
             {/* Desktop Navigation */}
