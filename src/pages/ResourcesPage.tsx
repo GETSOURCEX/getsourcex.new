@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, FileText, TrendingDown } from 'lucide-react';
 import { useForm } from '../context/FormContext';
 import SEO from '../components/SEO';
 
 export default function ResourcesPage() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isThankYouOpen, setIsThankYouOpen] = useState(false);
-
-  const handleFormSuccess = () => {
-    setIsThankYouOpen(true);
-  };
+  const { openForm } = useForm();
 
   return (
     <>
@@ -19,7 +14,7 @@ export default function ResourcesPage() {
         keywords="clinic revenue leak, clinic profit analysis, hidden clinic revenue"
       />
 
-      <div className="min-h-screen bg-[#0a0a0a] text-white pt-24">
+      <div className="min-h-screen bg-[#0B0B0D] text-white pt-24">
         <section className="py-24">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
@@ -37,8 +32,9 @@ export default function ResourcesPage() {
                 </p>
 
                 <button
-                  onClick={() => setIsFormOpen(true)}
-                  className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white font-semibold px-10 py-5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2 text-lg"
+                  onClick={() => openForm('leak_report')}
+                  data-cta="leak_report"
+                  className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
                 >
                   See My Leak Report
                   <ArrowRight size={20} />
@@ -162,8 +158,9 @@ export default function ResourcesPage() {
                   Get your free revenue leak report in 48 hours.
                 </p>
                 <button
-                  onClick={() => setIsFormOpen(true)}
-                  className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white font-semibold px-10 py-5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2 text-lg"
+                  onClick={() => openForm('leak_report')}
+                  data-cta="leak_report"
+                  className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
                 >
                   Get My Free Report Now
                   <ArrowRight size={20} />
@@ -177,16 +174,6 @@ export default function ResourcesPage() {
           </div>
         </section>
 
-        <FormModal
-          isOpen={isFormOpen}
-          onClose={() => setIsFormOpen(false)}
-          onSuccess={handleFormSuccess}
-        />
-
-        <ThankYouPopup
-          isOpen={isThankYouOpen}
-          onClose={() => setIsThankYouOpen(false)}
-        />
       </div>
     </>
   );
