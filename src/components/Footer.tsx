@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, Shield } from 'lucide-react';
-import Logo from '../assets/FINAL LOGO .png';
+import SiteLogo from './SiteLogo';
 
 const Footer = () => {
   return (
@@ -9,15 +9,8 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <img
-                src={Logo}
-                alt="Source X Logo"
-                className="h-10 w-auto object-contain"
-              />
-              <span className="logo-text">
-                SOURCE<span className="logo-x">X</span>
-              </span>
+            <div className="mb-6">
+              <SiteLogo />
             </div>
             <p className="text-gray-400 mb-6">
               AI That Books, Reminds and Delivers While You Focus on Patients.
