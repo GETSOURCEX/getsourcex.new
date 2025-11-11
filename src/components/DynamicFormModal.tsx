@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Loader2 } from 'lucide-react';
 import { FormConfig } from '../config/formConfigs';
+import { useForm } from '../context/FormContext';
 
 interface DynamicFormModalProps {
   isOpen: boolean;
@@ -8,11 +9,42 @@ interface DynamicFormModalProps {
   config: FormConfig | null;
 }
 
+const Confetti: React.FC = () => {
+  const colors = ['#3B82F6', '#6366F1', '#8B5CF6', '#EC4899', '#F59E0B'];
+  const pieces = Array.from({ length: 50 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    duration: 2 + Math.random(),
+    color: colors[Math.floor(Math.random() * colors.length)]
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {pieces.map((piece) => (
+        <div
+          key={piece.id}
+          className="confetti-piece"
+          style={{
+            left: `${piece.left}%`,
+            top: '-10px',
+            backgroundColor: piece.color,
+            animationDelay: `${piece.delay}s`,
+            animationDuration: `${piece.duration}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFormModalProps) {
+  const { openForm } = useForm();
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     if (isOpen && config) {
@@ -20,6 +52,7 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
       setConsent(false);
       setShowSuccess(false);
       setIsSubmitting(false);
+      setShowConfetti(false);
     }
   }, [isOpen, config]);
 
@@ -33,6 +66,15 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (showSuccess && config?.autoCloseDelay && config.autoCloseDelay > 0) {
+      const timer = setTimeout(() => {
+        handleSuccessClose();
+      }, config.autoCloseDelay);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess, config]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -77,6 +119,11 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
 
     setIsSubmitting(false);
     setShowSuccess(true);
+
+    if (config.showConfetti) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3000);
+    }
   };
 
   const handleSuccessClose = () => {
@@ -84,30 +131,118 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
     onClose();
   };
 
+  const handleSecondaryAction = () => {
+    if (config?.successSecondaryAction) {
+      setShowSuccess(false);
+      onClose();
+      setTimeout(() => openForm(config.successSecondaryAction!), 300);
+    } else {
+      handleSuccessClose();
+    }
+  };
+
+  const handlePrimaryAction = () => {
+    if (config?.successPrimaryLink) {
+      if (typeof window !== 'undefined') {
+        if ((window as any).dataLayer) {
+          (window as any).dataLayer.push({
+            event: 'roi_meeting_booked',
+            formId: config.id
+          });
+        }
+        if ((window as any).fbq) {
+          (window as any).fbq('trackCustom', 'roi_meeting_booked');
+        }
+      }
+      window.open(config.successPrimaryLink, '_blank', 'noopener,noreferrer');
+    } else {
+      handleSuccessClose();
+    }
+  };
+
   if (!isOpen || !config) return null;
 
   if (showSuccess) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div className="bg-[#111111] rounded-3xl p-12 max-w-lg w-full text-center border border-white/10 animate-fade-in-up">
-          <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center animate-scale-in">
-              <CheckCircle className="w-12 h-12 text-white" />
+        {showConfetti && <Confetti />}
+
+        <div
+          className="relative bg-[#111111] rounded-3xl p-12 max-w-2xl w-full text-center border-2 border-transparent animate-fade-in-up"
+          style={{
+            backgroundImage: 'linear-gradient(#111111, #111111), linear-gradient(120deg, #3B82F6, #6366F1)',
+            backgroundOrigin: 'border-box',
+            backgroundClip: 'padding-box, border-box',
+            boxShadow: '0 0 40px rgba(59, 130, 246, 0.3), 0 20px 60px rgba(0, 0, 0, 0.5)'
+          }}
+        >
+          <div className="flex justify-center mb-8">
+            <div className="relative w-24 h-24 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center animate-bounce-in">
+              <CheckCircle className="w-14 h-14 text-white" strokeWidth={2.5} />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full blur-2xl opacity-50" />
             </div>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-4">{config.successTitle}</h2>
+          <div className="space-y-6">
+            <h2
+              className="text-4xl font-bold text-white animate-fade-in-up-stagger"
+              style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+            >
+              {config.successTitle} {config.successEmoji}
+            </h2>
 
-          <p className="text-lg text-gray-300 mb-8">
-            {config.successBody}
-          </p>
+            <p
+              className="text-xl text-gray-300 whitespace-pre-line animate-fade-in-up-stagger leading-relaxed"
+              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            >
+              {config.successBody}
+            </p>
 
-          <button
-            onClick={handleSuccessClose}
-            className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300"
-          >
-            Close
-          </button>
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in-up-stagger"
+              style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+            >
+              {config.successPrimaryButton && (
+                <button
+                  onClick={handlePrimaryAction}
+                  className={`${config.successPrimaryLink ? 'animate-breathe' : ''} bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-10 py-5 rounded-xl hover:scale-105 transition-transform duration-300 text-lg`}
+                >
+                  {config.successPrimaryButton}
+                </button>
+              )}
+
+              {config.successSecondaryButton && (
+                <button
+                  onClick={handleSecondaryAction}
+                  className="border-2 border-white/20 text-white font-semibold px-10 py-5 rounded-xl hover:bg-white/5 hover:border-white/30 transition-all duration-300 text-lg"
+                >
+                  {config.successSecondaryButton}
+                </button>
+              )}
+
+              {!config.successSecondaryButton && (config.successPrimaryButton === 'Close' || config.successPrimaryButton === 'Got It' || config.successPrimaryButton === 'Return to Home' || config.successPrimaryButton === 'Awesome, Thanks') && (
+                <button
+                  onClick={handleSuccessClose}
+                  className="border-2 border-white/20 text-white font-semibold px-10 py-5 rounded-xl hover:bg-white/5 hover:border-white/30 transition-all duration-300 text-lg mt-4 sm:mt-0"
+                >
+                  {config.successPrimaryButton === 'Return to Home' ? 'Return to Home' : 'Close'}
+                </button>
+              )}
+            </div>
+
+            {config.successFooter && (
+              <p
+                className="text-sm text-gray-400 mt-8 animate-fade-in-up-stagger"
+                style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
+              >
+                {config.successFooter}
+              </p>
+            )}
+
+            <p className="text-xs text-gray-500 mt-6 border-t border-white/10 pt-6">
+              Your data is protected under PHIPA and PIPEDA compliance standards.
+            </p>
+          </div>
         </div>
       </div>
     );

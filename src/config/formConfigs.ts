@@ -15,6 +15,14 @@ export interface FormConfig {
   submitLabel: string;
   successTitle: string;
   successBody: string;
+  successEmoji?: string;
+  successPrimaryButton?: string;
+  successPrimaryLink?: string;
+  successSecondaryButton?: string;
+  successSecondaryAction?: string;
+  successFooter?: string;
+  showConfetti?: boolean;
+  autoCloseDelay?: number;
   trackingEvent: string;
 }
 
@@ -38,8 +46,15 @@ export const CTA_FORMS: Record<string, FormConfig> = {
       { name: 'notes', label: 'Notes (optional)', type: 'textarea', required: false, placeholder: 'Any additional information' }
     ],
     submitLabel: 'Submit Securely',
-    successTitle: 'ROI Snapshot Request Confirmed',
-    successBody: 'We will reach out within 24 hours to schedule your 15-minute call and send your 48-hour ROI projection.',
+    successTitle: 'ROI Snapshot Confirmed',
+    successEmoji: '✅',
+    successBody: "You're all set. Your 48-hour ROI projection is being prepared.\nSchedule your 15-minute ROI Snapshot Call below to review your clinic's growth plan.",
+    successPrimaryButton: '→ Schedule My ROI Call',
+    successPrimaryLink: 'https://zeeg.me/vatsalsourcex/15-minute-dollar10k-clinic-fix-roi-snapshot-call',
+    successSecondaryButton: 'Return to Home',
+    successFooter: 'Spots for this week fill fast — claim your call now.',
+    showConfetti: true,
+    autoCloseDelay: 0,
     trackingEvent: 'lead_roi_snapshot'
   },
 
@@ -63,8 +78,12 @@ export const CTA_FORMS: Record<string, FormConfig> = {
       }
     ],
     submitLabel: 'Book My Audit',
-    successTitle: 'Audit Booked',
-    successBody: 'Thanks. We will contact you within 24 hours to confirm your audit and share next steps.',
+    successTitle: 'Your Free AI Audit is Locked In',
+    successEmoji: '🚀',
+    successBody: "We'll reach out within 24 hours to confirm your audit and send your ROI readiness checklist.\nYou'll receive a confirmation email shortly.",
+    successPrimaryButton: 'Got It',
+    successFooter: 'Your information is protected under PHIPA and PIPEDA standards.',
+    autoCloseDelay: 10000,
     trackingEvent: 'lead_free_audit'
   },
 
@@ -87,8 +106,13 @@ export const CTA_FORMS: Record<string, FormConfig> = {
       { name: 'notes', label: 'Notes (optional)', type: 'textarea', required: false, placeholder: 'Any additional information' }
     ],
     submitLabel: 'Send My Report',
-    successTitle: 'Report Request Received',
-    successBody: 'Your custom Leak Report will arrive within 24 hours. We will follow up if any clarification is needed.',
+    successTitle: 'Your Leak Report Is On Its Way',
+    successEmoji: '💡',
+    successBody: "We're analyzing your data and will email your report within 24 hours.\nYou'll also receive a short breakdown of how to fix your biggest revenue leaks.",
+    successPrimaryButton: 'Awesome, Thanks',
+    successSecondaryButton: 'Get My ROI Snapshot Too',
+    successSecondaryAction: 'roi_snapshot',
+    autoCloseDelay: 10000,
     trackingEvent: 'lead_leak_report'
   },
 
@@ -112,7 +136,10 @@ export const CTA_FORMS: Record<string, FormConfig> = {
     ],
     submitLabel: 'Start My Setup',
     successTitle: 'Setup Request Confirmed',
-    successBody: 'We will contact you within 24 hours to align on your 7-day installation plan.',
+    successEmoji: '⚙️',
+    successBody: "We'll contact you within 24 hours to align on your 7-day installation plan.\nEverything's about to get a lot simpler.",
+    successPrimaryButton: 'Close',
+    autoCloseDelay: 10000,
     trackingEvent: 'lead_get_started'
   },
 
@@ -135,8 +162,11 @@ export const CTA_FORMS: Record<string, FormConfig> = {
       }
     ],
     submitLabel: 'Book My Demo',
-    successTitle: 'Demo Scheduled Request',
-    successBody: 'We will reach out to confirm your demo time and send a calendar invite.',
+    successTitle: 'Demo Request Confirmed',
+    successEmoji: '👏',
+    successBody: "Thanks for booking your 15-minute demo.\nOur team will confirm your time and send your calendar invite shortly.",
+    successPrimaryButton: 'Return to Home',
+    autoCloseDelay: 10000,
     trackingEvent: 'lead_demo'
   },
 
@@ -151,8 +181,11 @@ export const CTA_FORMS: Record<string, FormConfig> = {
       { name: 'message', label: 'Message', type: 'textarea', required: true, placeholder: 'Tell us how we can help' }
     ],
     submitLabel: 'Send Message',
-    successTitle: 'Message Sent',
-    successBody: 'Thanks for reaching out. We will reply within one business day.',
+    successTitle: 'Message Received',
+    successEmoji: '📬',
+    successBody: "Thanks for reaching out. We'll reply within one business day.",
+    successPrimaryButton: 'Close',
+    autoCloseDelay: 10000,
     trackingEvent: 'contact_message'
   }
 };
