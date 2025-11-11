@@ -1,17 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { ArrowRight, CheckCircle, Shield, TrendingUp } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import FormModal from '../components/FormModal';
-import ThankYouPopup from '../components/ThankYouPopup';
+import { useForm } from '../context/FormContext';
 import SEO from '../components/SEO';
 
 export default function NewHomePage() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isThankYouOpen, setIsThankYouOpen] = useState(false);
-
-  const handleFormSuccess = () => {
-    setIsThankYouOpen(true);
-  };
+  const { openForm } = useForm();
 
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true });
   const [leaksRef, leaksInView] = useInView({ threshold: 0.1, triggerOnce: true });
@@ -52,7 +46,8 @@ export default function NewHomePage() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <button
-                  onClick={() => setIsFormOpen(true)}
+                  onClick={() => openForm('roi_snapshot')}
+                  data-cta="roi_snapshot"
                   className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center justify-center gap-2 text-lg animate-pulse-slow"
                 >
                   Get My Free ROI Snapshot
@@ -111,7 +106,8 @@ export default function NewHomePage() {
 
             <div className="text-center mt-12">
               <button
-                onClick={() => setIsFormOpen(true)}
+                onClick={() => openForm('leak_report')}
+                data-cta="leak_report"
                 className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2"
               >
                 See Your Leak Report
@@ -154,7 +150,8 @@ export default function NewHomePage() {
 
             <div className="text-center mt-12">
               <button
-                onClick={() => setIsFormOpen(true)}
+                onClick={() => openForm('free_audit')}
+                data-cta="free_audit"
                 className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 animate-pulse-slow"
               >
                 Book My Free Audit
@@ -198,7 +195,8 @@ export default function NewHomePage() {
 
             <div className="text-center mt-12">
               <button
-                onClick={() => setIsFormOpen(true)}
+                onClick={() => openForm('get_started')}
+                data-cta="get_started"
                 className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2"
               >
                 Get Started Now
@@ -235,7 +233,8 @@ export default function NewHomePage() {
               </div>
 
               <button
-                onClick={() => setIsFormOpen(true)}
+                onClick={() => openForm('roi_snapshot')}
+                data-cta="roi_snapshot"
                 className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
               >
                 Claim My Free ROI Snapshot
@@ -306,7 +305,8 @@ export default function NewHomePage() {
               </p>
 
               <button
-                onClick={() => setIsFormOpen(true)}
+                onClick={() => openForm('roi_snapshot')}
+                data-cta="roi_snapshot"
                 className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-12 py-5 rounded-xl hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] transition-all duration-300 inline-flex items-center gap-2 text-xl animate-pulse-slow"
               >
                 Get My Free ROI Snapshot
@@ -315,17 +315,6 @@ export default function NewHomePage() {
             </div>
           </div>
         </section>
-
-        <FormModal
-          isOpen={isFormOpen}
-          onClose={() => setIsFormOpen(false)}
-          onSuccess={handleFormSuccess}
-        />
-
-        <ThankYouPopup
-          isOpen={isThankYouOpen}
-          onClose={() => setIsThankYouOpen(false)}
-        />
       </div>
     </>
   );

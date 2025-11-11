@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, Phone, Users, Globe, CheckCircle } from 'lucide-react';
-import FormModal from '../components/FormModal';
-import ThankYouPopup from '../components/ThankYouPopup';
+import { useForm } from '../context/FormContext';
 import SEO from '../components/SEO';
 
 export default function NewServicesPage() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isThankYouOpen, setIsThankYouOpen] = useState(false);
-
-  const handleFormSuccess = () => {
-    setIsThankYouOpen(true);
-  };
+  const { openForm } = useForm();
 
   return (
     <>
@@ -212,17 +206,6 @@ export default function NewServicesPage() {
             </div>
           </div>
         </section>
-
-        <FormModal
-          isOpen={isFormOpen}
-          onClose={() => setIsFormOpen(false)}
-          onSuccess={handleFormSuccess}
-        />
-
-        <ThankYouPopup
-          isOpen={isThankYouOpen}
-          onClose={() => setIsThankYouOpen(false)}
-        />
       </div>
     </>
   );

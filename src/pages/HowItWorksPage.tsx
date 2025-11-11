@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
-import FormModal from '../components/FormModal';
-import ThankYouPopup from '../components/ThankYouPopup';
+import { useForm } from '../context/FormContext';
 import SEO from '../components/SEO';
 
 export default function HowItWorksPage() {
