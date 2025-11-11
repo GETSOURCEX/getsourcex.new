@@ -17,8 +17,8 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-sm border-b border-white/10">
+    <div className="min-h-screen bg-[#0B0B0D]">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0B0D]/90 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-3">

@@ -179,46 +179,6 @@ export default function NewServicesPage() {
               </div>
             </div>
 
-            <div className="max-w-4xl mx-auto mb-20">
-              <div className="bg-gradient-to-br from-[#3B82F6]/20 to-[#8B5CF6]/20 rounded-3xl p-12 border border-white/10">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Pricing</h2>
-                <p className="text-xl text-gray-300 text-center mb-8">
-                  Simple, transparent, and performance-based
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-[#0a0a0a] rounded-2xl p-6 border border-white/10">
-                    <h3 className="text-xl font-bold mb-2">Setup Investment</h3>
-                    <div className="text-3xl font-bold text-[#3B82F6] mb-4">$3,000 to $8,000 CAD</div>
-                    <p className="text-gray-400">
-                      One-time setup includes full system installation, customization, and training.
-                    </p>
-                  </div>
-
-                  <div className="bg-[#0a0a0a] rounded-2xl p-6 border border-white/10">
-                    <h3 className="text-xl font-bold mb-2">Monthly Retention</h3>
-                    <div className="text-3xl font-bold text-[#3B82F6] mb-4">Performance-Based</div>
-                    <p className="text-gray-400">
-                      You only pay based on the results we deliver. No results, no retention.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <p className="text-lg text-gray-300 mb-6">
-                    Most clinics recover their investment within the first 30 days.
-                  </p>
-                  <button
-                    onClick={() => setIsFormOpen(true)}
-                    className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white font-semibold px-10 py-5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2 text-lg"
-                  >
-                    Get My Free ROI Snapshot
-                    <ArrowRight size={20} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Every Service Includes
