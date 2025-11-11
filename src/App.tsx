@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
+import SiteLogo from './components/SiteLogo';
 import NewHomePage from './pages/NewHomePage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import NewServicesPage from './pages/NewServicesPage';
 import ResourcesPage from './pages/ResourcesPage';
 import AboutPage from './pages/AboutPage';
-import Logo from './assets/FINAL LOGO .png';
 
 const App = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,16 +21,7 @@ const App = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0B0D]/90 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-3">
-              <img
-                src={Logo}
-                alt="Source X Logo"
-                className="h-10 md:h-12 w-auto object-contain"
-              />
-              <span className="logo-text">
-                SOURCE<span className="logo-x">X</span>
-              </span>
-            </Link>
+            <SiteLogo />
 
             <nav className="hidden md:flex space-x-8">
               <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
