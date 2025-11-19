@@ -2,15 +2,28 @@ import React, { useState } from 'react';
 
 const ContactForm = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [consent, setConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!consent) {
+      alert("Please agree to be contacted under Canada's anti-spam law (CASL)");
+      return;
+    }
+
     setStatus('submitting');
 
     try {
       const form = e.currentTarget;
       const formData = new FormData(form);
-      const response = await fetch('https://formspree.io/f/xjkwqkla', {
+
+      formData.append('_source_page', window.location.href);
+      formData.append('_cta_type', 'contact');
+      formData.append('_site', 'Source X');
+      formData.append('caslConsent', 'true');
+
+      const response = await fetch('https://formspree.io/f/mblwoddo', {
         method: 'POST',
         body: formData,
         headers: {
@@ -21,6 +34,7 @@ const ContactForm = () => {
       if (response.ok) {
         setStatus('success');
         form.reset();
+        setConsent(false);
       } else {
         setStatus('error');
       }
@@ -89,6 +103,23 @@ const ContactForm = () => {
         />
       </div>
 
+      <div className="flex items-start gap-3 pt-2">
+        <input
+          type="checkbox"
+          id="consent"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-1 w-4 h-4 rounded border-white/10 bg-[#0B0B0D] text-[#3b82f6] focus:ring-[#3b82f6] focus:ring-offset-0"
+        />
+        <label htmlFor="consent" className="text-sm text-gray-400">
+          I agree to be contacted under Canada's anti-spam law (CASL) *
+        </label>
+      </div>
+
+      <div className="text-xs text-gray-500 pt-2 border-t border-white/10">
+        Your information is protected under PHIPA and PIPEDA compliance standards.
+      </div>
+
       <button
         type="submit"
         disabled={status === 'submitting'}
@@ -99,7 +130,7 @@ const ContactForm = () => {
 
       {status === 'error' && (
         <p className="text-red-500 text-center mt-2">
-          Something went wrong. Please try again later.
+          Something went wrong. Please try again or contact info@getsourcex.com.
         </p>
       )}
     </form>

@@ -93,9 +93,32 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
 
     setIsSubmitting(true);
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
     try {
+      const formDataToSend = new FormData();
+
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value) {
+          formDataToSend.append(key, value);
+        }
+      });
+
+      formDataToSend.append('_source_page', window.location.href);
+      formDataToSend.append('_cta_type', config.id);
+      formDataToSend.append('_site', 'Source X');
+      formDataToSend.append('caslConsent', 'true');
+
+      const response = await fetch('https://formspree.io/f/mblwoddo', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: formDataToSend
+      });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
       if (typeof window !== 'undefined') {
         if ((window as any).dataLayer) {
           (window as any).dataLayer.push({
@@ -112,17 +135,17 @@ export default function DynamicFormModal({ isOpen, onClose, config }: DynamicFor
         }
       }
 
-      console.log('Form submitted:', { config: config.id, data: formData });
+      setIsSubmitting(false);
+      setShowSuccess(true);
+
+      if (config.showConfetti) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
     } catch (error) {
-      console.error('Tracking error:', error);
-    }
-
-    setIsSubmitting(false);
-    setShowSuccess(true);
-
-    if (config.showConfetti) {
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
+      console.error('Form submission error:', error);
+      setIsSubmitting(false);
+      alert('Something went wrong. Please try again or contact info@getsourcex.com.');
     }
   };
 
