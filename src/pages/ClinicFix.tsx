@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle, AlertCircle, ChevronDown, TrendingUp, Clock, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ClinicFix = () => {
   const navigate = useNavigate();
-  const [revenue, setRevenue] = useState(0);
-  const hasAnimatedRef = useRef(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -17,30 +15,6 @@ const ClinicFix = () => {
   const [showThankYou, setShowThankYou] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (hasAnimatedRef.current) return;
-
-    let frame: number;
-    const duration = 1500;
-    const start = performance.now();
-    const target = 10000;
-
-    const animate = (time: number) => {
-      const elapsed = time - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const value = Math.floor(progress * target);
-      setRevenue(value);
-      if (progress < 1) {
-        frame = requestAnimationFrame(animate);
-      }
-    };
-
-    frame = requestAnimationFrame(animate);
-    hasAnimatedRef.current = true;
-
-    return () => cancelAnimationFrame(frame);
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -233,12 +207,17 @@ const ClinicFix = () => {
                   The $10K Clinic Fix identifies those leaks and helps you recover the revenue, in days, not months.
                 </p>
 
-                <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500">
-                  <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                    ${revenue.toLocaleString()}
-                  </div>
-                  <div className="text-sm font-semibold text-gray-400 mt-2 tracking-wider uppercase">
-                    Revenue Recovered
+                <div className="w-full max-w-xl rounded-2xl border border-white/5 bg-gradient-to-r from-slate-900/70 to-slate-800/70 px-4 py-3 shadow-sm">
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-slate-200">
+                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
+                      Built for GTA Clinics
+                    </span>
+                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
+                      PHIPA &amp; PIPEDA Compliant
+                    </span>
+                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
+                      48-Hour Average Setup
+                    </span>
                   </div>
                 </div>
               </div>
