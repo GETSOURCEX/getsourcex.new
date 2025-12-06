@@ -8,6 +8,7 @@ import HowItWorksPage from './pages/HowItWorksPage';
 import NewServicesPage from './pages/NewServicesPage';
 import ResourcesPage from './pages/ResourcesPage';
 import AboutPage from './pages/AboutPage';
+import ClinicFix from './pages/ClinicFix';
 
 const App = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +25,9 @@ const App = () => {
             <SiteLogo />
 
             <nav className="hidden md:flex space-x-8">
+              <Link to="/clinic-fix" className="text-gray-300 hover:text-white transition-colors">
+                $10K Clinic Fix
+              </Link>
               <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
                 How It Works
               </Link>
@@ -49,6 +53,13 @@ const App = () => {
           {isMobileMenuOpen && (
             <nav className="md:hidden py-4 border-t border-white/10 mt-4">
               <div className="flex flex-col space-y-4">
+                <Link
+                  to="/clinic-fix"
+                  className="text-gray-300 hover:text-white transition-colors"
+                  onClick={handleMobileNavClick}
+                >
+                  $10K Clinic Fix
+                </Link>
                 <Link
                   to="/how-it-works"
                   className="text-gray-300 hover:text-white transition-colors"
@@ -86,6 +97,7 @@ const App = () => {
       <div className="pt-20">
         <Routes>
           <Route path="/" element={<NewHomePage />} />
+          <Route path="/clinic-fix" element={<ClinicFix />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/services" element={<NewServicesPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
