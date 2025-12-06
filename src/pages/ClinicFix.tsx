@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { CheckCircle, AlertCircle, ChevronDown, TrendingUp, Clock, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ClinicFix = () => {
   const navigate = useNavigate();
-  const [counter, setCounter] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [revenue, setRevenue] = useState(0);
+  const hasAnimatedRef = useRef(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -18,27 +19,28 @@ const ClinicFix = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!hasAnimated) {
-      const duration = 2000;
-      const steps = 60;
-      const increment = 10000 / steps;
-      const stepDuration = duration / steps;
+    if (hasAnimatedRef.current) return;
 
-      let currentStep = 0;
-      const timer = setInterval(() => {
-        currentStep++;
-        if (currentStep <= steps) {
-          setCounter(Math.floor(increment * currentStep));
-        } else {
-          setCounter(10000);
-          clearInterval(timer);
-        }
-      }, stepDuration);
+    let frame: number;
+    const duration = 1500;
+    const start = performance.now();
+    const target = 10000;
 
-      setHasAnimated(true);
-      return () => clearInterval(timer);
-    }
-  }, [hasAnimated]);
+    const animate = (time: number) => {
+      const elapsed = time - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(progress * target);
+      setRevenue(value);
+      if (progress < 1) {
+        frame = requestAnimationFrame(animate);
+      }
+    };
+
+    frame = requestAnimationFrame(animate);
+    hasAnimatedRef.current = true;
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -124,7 +126,7 @@ const ClinicFix = () => {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
         <div
-          className="relative bg-[#111111] rounded-3xl p-12 max-w-2xl w-full text-center border-2 border-transparent animate-fade-in-up"
+          className="relative bg-[#111111] rounded-3xl p-12 max-w-2xl w-full text-center border-2 border-transparent"
           style={{
             backgroundImage: 'linear-gradient(#111111, #111111), linear-gradient(120deg, #3B82F6, #6366F1)',
             backgroundOrigin: 'border-box',
@@ -177,491 +179,535 @@ const ClinicFix = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617]">
-      <section className="relative py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1e1b4b]/20 to-transparent pointer-events-none" />
+    <>
+      <Helmet>
+        <title>Clinic Automation Toronto | $10K Clinic Fix for GTA Clinics | Source X</title>
+        <meta
+          name="description"
+          content="Recover $10K in 30 days from missed calls and no-shows. Source X helps GTA and Toronto clinics automate follow-ups, plug revenue leaks, and boost patient bookings with AI-powered clinic automation."
+        />
+        <link rel="canonical" href="https://getsourcex.com/clinic-fix" />
 
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div className="space-y-8">
-              <h1 className="text-5xl md:text-6xl font-black text-white leading-tight">
-                Recover $10K in 30 Days,<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                  Without Ads, Extra Staff, or Guesswork
-                </span>
-              </h1>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://getsourcex.com/clinic-fix" />
+        <meta property="og:title" content="Clinic Automation Toronto | $10K Clinic Fix for GTA Clinics | Source X" />
+        <meta
+          property="og:description"
+          content="Recover $10K in 30 days from missed calls and no-shows. Source X helps GTA and Toronto clinics automate follow-ups, plug revenue leaks, and boost patient bookings with AI-powered clinic automation."
+        />
+        <meta property="og:image" content="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg" />
+        <meta property="og:site_name" content="Source X" />
 
-              <p className="text-xl text-gray-300 leading-relaxed">
-                Your clinic is leaking thousands every month through missed calls, no-shows, and slow follow-ups.
-                The $10K Clinic Fix identifies those leaks and helps you recover the revenue, in days, not months.
-              </p>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://getsourcex.com/clinic-fix" />
+        <meta name="twitter:title" content="Clinic Automation Toronto | $10K Clinic Fix for GTA Clinics | Source X" />
+        <meta
+          name="twitter:description"
+          content="Recover $10K in 30 days from missed calls and no-shows. Source X helps GTA and Toronto clinics automate follow-ups, plug revenue leaks, and boost patient bookings with AI-powered clinic automation."
+        />
+        <meta name="twitter:image" content="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg" />
 
-              <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-2xl border border-[#3B82F6]/30 shadow-2xl">
-                <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                  ${counter.toLocaleString()}
-                </div>
-                <div className="text-sm font-semibold text-gray-400 mt-2 tracking-wider uppercase">
-                  Revenue Recovered
-                </div>
-              </div>
-            </div>
+        <meta name="geo.region" content="CA-ON" />
+        <meta name="geo.placename" content="Toronto" />
+        <meta name="geo.position" content="43.653226;-79.383184" />
+        <meta name="ICBM" content="43.653226, -79.383184" />
+      </Helmet>
 
-            <div className="bg-[#0f172a] p-8 rounded-3xl border border-white/10 shadow-2xl">
-              <h2 className="text-3xl font-bold text-white mb-2">
-                Claim My Free $10K Clinic Fix
-              </h2>
-              <p className="text-gray-400 mb-6">
-                Normally $297 – free for the first 5 GTA clinics this month
-              </p>
+      <div className="min-h-screen bg-[#0B0B0D]">
+        <section className="relative py-20 px-6 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/20 via-[#0B0B0D] to-[#6366F1]/20" />
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40" />
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    required
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#020617] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
-                    placeholder="Dr. Sarah Johnson"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Work Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#020617] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
-                    placeholder="sarah@clinic.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#020617] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
-                    placeholder="(416) 555-1234"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="clinicName" className="block text-sm font-medium text-gray-300 mb-2">
-                    Clinic Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="clinicName"
-                    name="clinicName"
-                    required
-                    value={formData.clinicName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#020617] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
-                    placeholder="Toronto Wellness Clinic"
-                  />
-                </div>
-
-                <div className="flex items-start gap-3 pt-2">
-                  <input
-                    type="checkbox"
-                    id="caslConsent"
-                    name="caslConsent"
-                    checked={formData.caslConsent}
-                    onChange={handleChange}
-                    className="mt-1 w-4 h-4 rounded border-white/10 bg-[#020617] text-[#3B82F6] focus:ring-[#3B82F6] focus:ring-offset-0"
-                  />
-                  <label htmlFor="caslConsent" className="text-sm text-gray-400">
-                    I consent to receive communications from Source X about clinic automation and agree to the privacy policy (CASL compliant). *
-                  </label>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Claim My Free $10K Clinic Fix'}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#0f172a]">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Trusted by Clinics Across the GTA
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              From physiotherapy and Medspas to laser and rehab centers, our systems have helped clinics recover real profit without new ads or staff.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-2xl border border-[#3B82F6]/20 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
-                1,400+
-              </div>
-              <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                Missed Calls Recovered
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-2xl border border-[#3B82F6]/20 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
-                $200K+
-              </div>
-              <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                In Client ROI
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-2xl border border-[#3B82F6]/20 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
-                48 Hours
-              </div>
-              <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                Avg. Setup Time
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#020617]">
-        <div className="container mx-auto max-w-4xl text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500/10 rounded-full mb-6">
-            <AlertCircle className="w-8 h-8 text-yellow-500" />
-          </div>
-          <h2 className="text-5xl font-black text-white leading-tight">
-            You Don't Need More Leads.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-              You Need to Stop Losing the Ones You Already Have.
-            </span>
-          </h2>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#0f172a]">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-10 rounded-3xl border border-[#3B82F6]/30 shadow-2xl">
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Most clinics spend thousands generating leads and then lose 30–40 percent to missed calls, slow responses, and no-shows.
-              <span className="block mt-4 font-semibold text-white">
-                It's not a people problem, it's a system problem.
-              </span>
-            </p>
-
-            <p className="text-lg text-gray-400 mb-8">
-              The $10K Clinic Fix plugs those leaks and helps you recover lost revenue automatically.
-            </p>
-
-            <div className="bg-[#020617] p-8 rounded-2xl border border-white/10">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="text-center md:text-left">
-                  <div className="text-6xl font-black text-yellow-400 mb-2">
-                    120
-                  </div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">
-                    Missed Calls Per Month
-                  </div>
-                </div>
-
-                <div className="text-4xl text-gray-600">→</div>
-
-                <div className="text-center md:text-right">
-                  <div className="text-6xl font-black text-red-500 mb-2">
-                    $34,560
-                  </div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">
-                    Annual Revenue Leak
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#020617]">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white mb-4">
-              The $10K Clinic Fix
-            </h2>
-            <p className="text-xl text-gray-300">
-              Your AI-Powered Revenue Recovery System
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-3xl border border-[#3B82F6]/20 hover:scale-105 transition-transform duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-black text-white mb-6">
-                1
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Diagnose</h3>
-              <p className="text-gray-400 mb-4">
-                <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
-                We analyze your call data & workflow
-              </p>
-              <p className="text-white font-semibold">
-                → Identify your top 3 revenue leaks
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-3xl border border-[#3B82F6]/20 hover:scale-105 transition-transform duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-black text-white mb-6">
-                2
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Design</h3>
-              <p className="text-gray-400 mb-4">
-                <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
-                You receive your AI Transformation Blueprint
-              </p>
-              <p className="text-white font-semibold">
-                → See your 10-day recovery plan
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-3xl border border-[#3B82F6]/20 hover:scale-105 transition-transform duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-black text-white mb-6">
-                3
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Deliver</h3>
-              <p className="text-gray-400 mb-4">
-                <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
-                We install and test your Fix in 48 hours
-              </p>
-              <p className="text-white font-semibold">
-                → Recover $10K+ in real revenue
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button
-              onClick={scrollToForm}
-              className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-12 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 text-lg"
-            >
-              Claim My Free $10K Clinic Fix
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#0f172a]">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold text-white mb-4">
-              What's Included
-            </h2>
-            <p className="text-xl text-gray-300">
-              Free for the First 5 Clinics
-            </p>
-          </div>
-
-          <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] rounded-3xl border border-[#3B82F6]/30 overflow-hidden shadow-2xl">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-[#020617] border-b border-white/10">
-                  <tr>
-                    <th className="text-left p-6 text-white font-bold">Component</th>
-                    <th className="text-left p-6 text-white font-bold">Description</th>
-                    <th className="text-right p-6 text-white font-bold">Value</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10">
-                  <tr>
-                    <td className="p-6 text-white font-semibold">The $10K Clinic Fix</td>
-                    <td className="p-6 text-gray-300">Done-for-you system that recovers $10K in lost revenue</td>
-                    <td className="p-6 text-right text-[#3B82F6] font-bold">$297</td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 text-white font-semibold">AI Audit + ROI Snapshot</td>
-                    <td className="p-6 text-gray-300">Personalized breakdown of your clinic's profit leaks</td>
-                    <td className="p-6 text-right text-[#3B82F6] font-bold">$499</td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 text-white font-semibold">Implementation Strategy Call</td>
-                    <td className="p-6 text-gray-300">One-on-one consultation with Source X</td>
-                    <td className="p-6 text-right text-[#3B82F6] font-bold">$199</td>
-                  </tr>
-                </tbody>
-                <tfoot className="bg-[#020617] border-t-2 border-[#3B82F6]/50">
-                  <tr>
-                    <td className="p-6 text-white font-bold text-lg">Total Value</td>
-                    <td className="p-6"></td>
-                    <td className="p-6 text-right text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                      $995 in Free Value
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <button
-              onClick={scrollToForm}
-              className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-12 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 text-lg"
-            >
-              Claim My Free $10K Clinic Fix
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#020617]">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white">
-              Born Inside Clinics. Built for Results.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-10 rounded-3xl border border-[#3B82F6]/20">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-black text-white mb-6">
-                M
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-4">Our Mission</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Source X was built from real front-desk chaos, missed calls, no-shows, and lost revenue.
-                We've been there. We understand the frustration of watching opportunities slip away while you're
-                busy caring for patients. That's why we created a system that works 24/7 to capture every lead
-                and maximize every opportunity.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-10 rounded-3xl border border-[#3B82F6]/20">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-black text-white mb-6">
-                G
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-4">Our Guarantee</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <Shield className="w-8 h-8 text-[#3B82F6] flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="text-xl font-bold text-white mb-2">
-                      25 Show-Up Guarantee
-                    </p>
-                    <p className="text-gray-300">
-                      If we don't deliver 25 booked consults in 30 days, your setup is free.
-                      We only succeed when you succeed.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#0f172a]">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold text-white mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-300">
-              Everything you need to know about The $10K Clinic Fix.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] rounded-2xl border border-white/10 overflow-hidden"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
-                >
-                  <span className="text-xl font-semibold text-white pr-8">
-                    {faq.question}
+          <div className="container mx-auto max-w-7xl relative z-10">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="space-y-8">
+                <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+                  Recover $10K in 30 Days,<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                    Without Ads, Extra Staff, or Guesswork
                   </span>
-                  <ChevronDown
-                    className={`w-6 h-6 text-[#3B82F6] flex-shrink-0 transition-transform duration-300 ${
-                      openFaq === index ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {openFaq === index && (
-                  <div className="px-6 pb-6 text-gray-300 leading-relaxed animate-fade-in-up">
-                    {faq.answer}
+                </h1>
+
+                <p className="text-xl text-gray-300 leading-relaxed">
+                  Your clinic is leaking thousands every month through missed calls, no-shows, and slow follow-ups.
+                  The $10K Clinic Fix identifies those leaks and helps you recover the revenue, in days, not months.
+                </p>
+
+                <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500">
+                  <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                    ${revenue.toLocaleString()}
                   </div>
-                )}
+                  <div className="text-sm font-semibold text-gray-400 mt-2 tracking-wider uppercase">
+                    Revenue Recovered
+                  </div>
+                </div>
               </div>
-            ))}
+
+              <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 shadow-2xl">
+                <h2 className="text-3xl font-bold text-white mb-2">
+                  Claim My Free $10K Clinic Fix
+                </h2>
+                <p className="text-gray-400 mb-6">
+                  Normally $297 – free for the first 5 GTA clinics this month
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      required
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-[#0B0B0D] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
+                      placeholder="Dr. Sarah Johnson"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                      Work Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-[#0B0B0D] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
+                      placeholder="sarah@clinic.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+                      Mobile Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-[#0B0B0D] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
+                      placeholder="(416) 555-1234"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="clinicName" className="block text-sm font-medium text-gray-300 mb-2">
+                      Clinic Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="clinicName"
+                      name="clinicName"
+                      required
+                      value={formData.clinicName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-[#0B0B0D] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#3B82F6] transition-colors"
+                      placeholder="Toronto Wellness Clinic"
+                    />
+                  </div>
+
+                  <div className="flex items-start gap-3 pt-2">
+                    <input
+                      type="checkbox"
+                      id="caslConsent"
+                      name="caslConsent"
+                      checked={formData.caslConsent}
+                      onChange={handleChange}
+                      className="mt-1 w-4 h-4 rounded border-white/10 bg-[#0B0B0D] text-[#3B82F6] focus:ring-[#3B82F6] focus:ring-offset-0"
+                    />
+                    <label htmlFor="caslConsent" className="text-sm text-gray-400">
+                      I consent to receive communications from Source X about clinic automation and agree to the privacy policy (CASL compliant). *
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Claim My Free $10K Clinic Fix'}
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <p className="text-center text-gray-400 mt-8">
-            For more questions, contact us at{' '}
-            <a href="mailto:support@getsourcex.com" className="text-[#3B82F6] hover:underline">
-              support@getsourcex.com
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-[#020617]">
-        <div className="container mx-auto max-w-5xl text-center">
-          <h2 className="text-6xl font-black text-white mb-6">
-            Ready to Recover $10K in 30 Days?
-          </h2>
-          <p className="text-2xl text-gray-300 mb-12">
-            Get your personalized plan, your AI ROI Snapshot, and see the real numbers before you decide.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
-            <div className="flex items-center gap-3 bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] px-6 py-3 rounded-full border border-[#3B82F6]/30">
-              <TrendingUp className="w-5 h-5 text-[#3B82F6]" />
-              <span className="text-white font-semibold">$10K+ Recovery</span>
+        <section className="py-20 px-6 bg-[#111111]">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Trusted by Clinics Across Toronto and the GTA
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                From physiotherapy and medspas to laser and rehab centers, our systems have helped clinics recover real profit without new ads or staff.
+              </p>
             </div>
-            <div className="flex items-center gap-3 bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] px-6 py-3 rounded-full border border-[#3B82F6]/30">
-              <Clock className="w-5 h-5 text-[#3B82F6]" />
-              <span className="text-white font-semibold">48-Hour Setup</span>
-            </div>
-            <div className="flex items-center gap-3 bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] px-6 py-3 rounded-full border border-[#3B82F6]/30">
-              <Shield className="w-5 h-5 text-[#3B82F6]" />
-              <span className="text-white font-semibold">25 Show-Up Guarantee</span>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105 text-center">
+                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
+                  1,400+
+                </div>
+                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                  Missed Calls Recovered
+                </div>
+              </div>
+
+              <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105 text-center">
+                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
+                  $200K+
+                </div>
+                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                  In Client ROI
+                </div>
+              </div>
+
+              <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105 text-center">
+                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
+                  48 Hours
+                </div>
+                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+                  Avg. Setup Time
+                </div>
+              </div>
             </div>
           </div>
+        </section>
 
-          <button
-            onClick={scrollToForm}
-            className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-16 py-6 rounded-xl hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] transition-all duration-300 text-xl mb-6"
-          >
-            Claim My Free $10K Clinic Fix
-          </button>
+        <section className="py-20 px-6 bg-[#0B0B0D]">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500/10 rounded-full mb-6">
+                <AlertCircle className="w-8 h-8 text-yellow-500" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+                You Don't Need More Leads.<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+                  You Need to Stop Losing the Ones You Already Have.
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                AI Automation For GTA Clinics That Want Real Revenue Recovery
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <p className="text-gray-400 text-sm">
-            Limited to 5 GTA clinics per month
-          </p>
-        </div>
-      </section>
-    </div>
+        <section className="py-20 px-6 bg-[#111111]">
+          <div className="container mx-auto max-w-4xl">
+            <div className="bg-[#0B0B0D] p-10 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500">
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                Most clinics spend thousands generating leads and then lose 30–40 percent to missed calls, slow responses, and no-shows.
+                <span className="block mt-4 font-semibold text-white">
+                  It's not a people problem, it's a system problem.
+                </span>
+              </p>
+
+              <p className="text-lg text-gray-400 mb-8">
+                The $10K Clinic Fix plugs those leaks and helps you recover lost revenue automatically.
+              </p>
+
+              <div className="bg-[#111111] p-8 rounded-2xl border border-white/10">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="text-center md:text-left">
+                    <div className="text-6xl font-bold text-yellow-400 mb-2">
+                      120
+                    </div>
+                    <div className="text-sm text-gray-400 uppercase tracking-wider">
+                      Missed Calls Per Month
+                    </div>
+                  </div>
+
+                  <div className="text-4xl text-gray-600">→</div>
+
+                  <div className="text-center md:text-right">
+                    <div className="text-6xl font-bold text-red-500 mb-2">
+                      $34,560
+                    </div>
+                    <div className="text-sm text-gray-400 uppercase tracking-wider">
+                      Annual Revenue Leak
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#0B0B0D]">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                The $10K Clinic Fix
+              </h2>
+              <p className="text-xl text-gray-300">
+                Your AI-Powered Revenue Recovery System
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6">
+                  1
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Diagnose</h3>
+                <p className="text-gray-400 mb-4">
+                  <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
+                  We analyze your call data & workflow
+                </p>
+                <p className="text-white font-semibold">
+                  → Identify your top 3 revenue leaks
+                </p>
+              </div>
+
+              <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6">
+                  2
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Design</h3>
+                <p className="text-gray-400 mb-4">
+                  <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
+                  You receive your AI Transformation Blueprint
+                </p>
+                <p className="text-white font-semibold">
+                  → See your 10-day recovery plan
+                </p>
+              </div>
+
+              <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6">
+                  3
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Deliver</h3>
+                <p className="text-gray-400 mb-4">
+                  <span className="font-semibold text-[#3B82F6] uppercase text-sm">What Happens</span><br />
+                  We install and test your Fix in 48 hours
+                </p>
+                <p className="text-white font-semibold">
+                  → Recover $10K+ in real revenue
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={scrollToForm}
+                className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-12 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 text-lg"
+              >
+                Claim My Free $10K Clinic Fix
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#111111]">
+          <div className="container mx-auto max-w-5xl">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                What's Included
+              </h2>
+              <p className="text-xl text-gray-300">
+                Free for the First 5 Clinics
+              </p>
+            </div>
+
+            <div className="bg-[#0B0B0D] rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-[#111111] border-b border-white/10">
+                    <tr>
+                      <th className="text-left p-6 text-white font-bold">Component</th>
+                      <th className="text-left p-6 text-white font-bold">Description</th>
+                      <th className="text-right p-6 text-white font-bold">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    <tr>
+                      <td className="p-6 text-white font-semibold">The $10K Clinic Fix</td>
+                      <td className="p-6 text-gray-300">Done-for-you system that recovers $10K in lost revenue</td>
+                      <td className="p-6 text-right text-[#3B82F6] font-bold">$297</td>
+                    </tr>
+                    <tr>
+                      <td className="p-6 text-white font-semibold">AI Audit + ROI Snapshot</td>
+                      <td className="p-6 text-gray-300">Personalized breakdown of your clinic's profit leaks</td>
+                      <td className="p-6 text-right text-[#3B82F6] font-bold">$499</td>
+                    </tr>
+                    <tr>
+                      <td className="p-6 text-white font-semibold">Implementation Strategy Call</td>
+                      <td className="p-6 text-gray-300">One-on-one consultation with Source X</td>
+                      <td className="p-6 text-right text-[#3B82F6] font-bold">$199</td>
+                    </tr>
+                  </tbody>
+                  <tfoot className="bg-[#111111] border-t-2 border-[#3B82F6]/50">
+                    <tr>
+                      <td className="p-6 text-white font-bold text-lg">Total Value</td>
+                      <td className="p-6"></td>
+                      <td className="p-6 text-right text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                        $995 in Free Value
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            <div className="text-center mt-12">
+              <button
+                onClick={scrollToForm}
+                className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-12 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 text-lg"
+              >
+                Claim My Free $10K Clinic Fix
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#0B0B0D]">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                Born Inside Clinics. Built for Results.
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-[#111111] p-10 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6">
+                  M
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-4">Our Mission</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Source X was built from real front-desk chaos, missed calls, no-shows, and lost revenue.
+                  We've been there. We understand the frustration of watching opportunities slip away while you're
+                  busy caring for patients. That's why we created a system that works 24/7 to capture every lead
+                  and maximize every opportunity.
+                </p>
+              </div>
+
+              <div className="bg-[#111111] p-10 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#6366F1] rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6">
+                  G
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-4">Our Guarantee</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <Shield
+                      className="w-8 h-8 text-[#3B82F6] flex-shrink-0 mt-1"
+                      aria-label="Source X clinic automation guarantee shield"
+                    />
+                    <div>
+                      <p className="text-xl font-bold text-white mb-2">
+                        25 Show-Up Guarantee
+                      </p>
+                      <p className="text-gray-300">
+                        If we don't deliver 25 booked consults in 30 days, your setup is free.
+                        We only succeed when you succeed.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#111111]">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-gray-300">
+                Everything you need to know about The $10K Clinic Fix.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-[#0B0B0D] rounded-2xl border border-white/10 overflow-hidden hover:border-[#3B82F6]/50 transition-all duration-300"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                  >
+                    <span className="text-xl font-semibold text-white pr-8">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`w-6 h-6 text-[#3B82F6] flex-shrink-0 transition-transform duration-300 ${
+                        openFaq === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-6 pb-6 text-gray-300 leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-gray-400 mt-8">
+              For more questions, contact us at{' '}
+              <a href="mailto:support@getsourcex.com" className="text-[#3B82F6] hover:underline">
+                support@getsourcex.com
+              </a>
+            </p>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#0B0B0D]">
+          <div className="container mx-auto max-w-5xl text-center">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              Ready to Recover $10K in 30 Days?
+            </h2>
+            <p className="text-2xl text-gray-300 mb-12">
+              Get your personalized plan, your AI ROI Snapshot, and see the real numbers before you decide.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-6 mb-12">
+              <div className="flex items-center gap-3 bg-[#111111] px-6 py-3 rounded-full border border-white/10 hover:border-[#3B82F6]/50 transition-all duration-300">
+                <TrendingUp className="w-5 h-5 text-[#3B82F6]" aria-label="Toronto clinic AI revenue recovery system" />
+                <span className="text-white font-semibold">$10K+ Recovery</span>
+              </div>
+              <div className="flex items-center gap-3 bg-[#111111] px-6 py-3 rounded-full border border-white/10 hover:border-[#3B82F6]/50 transition-all duration-300">
+                <Clock className="w-5 h-5 text-[#3B82F6]" aria-label="GTA medical clinic call automation" />
+                <span className="text-white font-semibold">48-Hour Setup</span>
+              </div>
+              <div className="flex items-center gap-3 bg-[#111111] px-6 py-3 rounded-full border border-white/10 hover:border-[#3B82F6]/50 transition-all duration-300">
+                <Shield className="w-5 h-5 text-[#3B82F6]" aria-label="Source X clinic automation guarantee" />
+                <span className="text-white font-semibold">25 Show-Up Guarantee</span>
+              </div>
+            </div>
+
+            <button
+              onClick={scrollToForm}
+              className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-bold px-16 py-6 rounded-xl hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] transition-all duration-300 text-xl mb-6"
+            >
+              Claim My Free $10K Clinic Fix
+            </button>
+
+            <p className="text-gray-400 text-sm">
+              Limited to 5 GTA clinics per month
+            </p>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 
