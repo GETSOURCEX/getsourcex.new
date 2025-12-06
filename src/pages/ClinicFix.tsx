@@ -206,20 +206,6 @@ const ClinicFix = () => {
                   Your clinic is leaking thousands every month through missed calls, no-shows, and slow follow-ups.
                   The $10K Clinic Fix identifies those leaks and helps you recover the revenue, in days, not months.
                 </p>
-
-                <div className="w-full max-w-xl rounded-2xl border border-white/5 bg-gradient-to-r from-slate-900/70 to-slate-800/70 px-4 py-3 shadow-sm">
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-slate-200">
-                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
-                      Built for GTA Clinics
-                    </span>
-                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
-                      PHIPA &amp; PIPEDA Compliant
-                    </span>
-                    <span className="rounded-full bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100">
-                      48-Hour Average Setup
-                    </span>
-                  </div>
-                </div>
               </div>
 
               <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 shadow-2xl">
