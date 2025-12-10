@@ -19,7 +19,7 @@ const reasons = [
   },
   {
     icon: Shield,
-    title: 'Guaranteed Results',
+    title: 'Results Guarantee',
     description: 'If we don\'t produce results, you don\'t pay the install. No fine print.',
     color: 'orange'
   },

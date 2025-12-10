@@ -15,7 +15,7 @@ const BeforeAfterSection = () => {
     },
     {
       number: "$200,000+",
-      label: "In Client ROI Generated"
+      label: "In Recovered ROI"
     },
     {
       number: "48-Hour",

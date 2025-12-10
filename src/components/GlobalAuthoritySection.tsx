@@ -15,19 +15,19 @@ const GlobalAuthoritySection = () => {
     {
       icon: Phone,
       title: "Missed Calls",
-      description: "Every 10 missed calls = $4,000 lost. Most clinics miss 30–50 calls monthly.",
+      description: "Every 10 missed calls = $4,000 lost.",
       color: "blue"
     },
     {
       icon: UserX,
       title: "No-Shows",
-      description: "25–40% of booked patients don't show. Most of that revenue is unrecoverable.",
+      description: "25–40% of consults vanish with no recovery.",
       color: "red"
     },
     {
       icon: Clock,
       title: "Slow Replies",
-      description: "78% of patients book with the clinic that replies first. If you respond late, you lose the client.",
+      description: "78% of patients book with whoever replies first.",
       color: "yellow"
     }
   ];
@@ -69,7 +69,7 @@ const GlobalAuthoritySection = () => {
             <span className="gradient-blue">Hidden Revenue Leaks</span>
           </h2>
           <p className="enhanced-subheading text-[#cccccc] leading-relaxed">
-            Most med-spas lose thousands every month and don't even know it. Here are the three biggest culprits:
+            Most med-spas across the GTA lose thousands each month without realizing it. Here are the three biggest culprits:
           </p>
         </motion.div>
 

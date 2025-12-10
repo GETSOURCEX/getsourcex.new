@@ -100,9 +100,9 @@ const TransformationFramework = () => {
           <button
             onClick={() => navigate('/clinic-fix')}
             className="px-8 py-4 bg-[#3B82F6] text-white font-semibold rounded-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
-            aria-label="Get My Free ROI Snapshot"
+            aria-label="Get Started Now"
           >
-            Get My Free ROI Snapshot
+            Get Started Now
           </button>
         </div>
       </div>
