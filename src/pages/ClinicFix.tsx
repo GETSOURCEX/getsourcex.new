@@ -205,6 +205,76 @@ const ClinicFix = () => {
                   Your clinic is leaking thousands every month through missed calls, no-shows, and slow follow-ups.
                   The $10K Clinic Fix identifies those leaks and helps you recover the revenue, in days, not months.
                 </p>
+
+                <div className="bg-[#111111] p-6 rounded-2xl border border-white/10 space-y-3">
+                  <h3 className="text-lg font-bold text-white mb-4">Mini Value Stack</h3>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-[#3B82F6] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">Installs in 48 hours</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-[#3B82F6] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">Works with the leads you already have</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-[#3B82F6] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300">Zero disruption to your workflow</span>
+                  </div>
+                </div>
+
+                <div className="bg-[#111111] p-6 rounded-2xl border border-[#3B82F6]/30 hover:border-[#3B82F6]/50 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <Shield className="w-8 h-8 text-[#3B82F6] flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2">100% Install Guarantee</h3>
+                      <p className="text-gray-300">
+                        If we can't identify and fix at least $10K in monthly revenue leaks, you don't pay.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#111111] p-6 rounded-2xl border border-white/10">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
+                    Trusted Across the GTA
+                  </h3>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                        1,400+
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">missed calls recovered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                        $200K+
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">clinic revenue recovered</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
+                        48-hour
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">average setup</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 rounded-2xl border border-yellow-500/30">
+                  <div className="flex items-start gap-4">
+                    <Clock className="w-8 h-8 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2">Limited Monthly Spots</h3>
+                      <p className="text-gray-300 mb-3">
+                        Only 5 free $10K Clinic Fix audits are approved each month.
+                      </p>
+                      <p className="text-sm text-yellow-400 font-semibold">
+                        Clinics are accepted on a first-come, first-served basis.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 shadow-2xl">
