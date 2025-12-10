@@ -196,9 +196,8 @@ const ClinicFix = () => {
             <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
-                  Recover $10K in 30 Days,<br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                    Without Ads, Extra Staff, or Guesswork
+                    Recover $10K in 30 Days
                   </span>
                 </h1>
 

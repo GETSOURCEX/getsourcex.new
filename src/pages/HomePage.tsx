@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SEO from '../components/SEO';
 import HeroSection from '../components/HeroSection';
 import GlobalAuthoritySection from '../components/GlobalAuthoritySection';
@@ -7,13 +7,10 @@ import TransformationFramework from '../components/TransformationFramework';
 import GuaranteeSection from '../components/GuaranteeSection';
 import BeforeAfterSection from '../components/BeforeAfterSection';
 import FinalCTA from '../components/FinalCTA';
-import ContactModal from '../components/ContactModal';
 
 const HomePage = () => {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-
   const handleContactClick = () => {
-    setIsContactModalOpen(true);
+    window.location.href = '/clinic-fix';
   };
 
   return (
@@ -32,10 +29,6 @@ const HomePage = () => {
         <BeforeAfterSection />
         <FinalCTA onContactClick={handleContactClick} />
       </main>
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-      />
     </>
   );
 };
