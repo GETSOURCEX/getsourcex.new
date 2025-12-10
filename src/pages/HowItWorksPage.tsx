@@ -1,17 +1,17 @@
 import React from 'react';
-import { ArrowRight, CheckCircle } from 'lucide-react';
-import { useForm } from '../context/FormContext';
+import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 export default function HowItWorksPage() {
-  const { openForm } = useForm();
+  const navigate = useNavigate();
 
   return (
     <>
       <SEO
-        title="The $10K Clinic Fix Process | Source X Toronto"
-        description="See how Source X recovers $10,000+ in hidden clinic revenue through our proven 3-step process: AI Audit, System Installation, and ROI Tracking."
-        keywords="clinic automation process, AI clinic setup, clinic revenue recovery process"
+        title="How Source X Fixes Your Revenue Leaks | $10K Clinic Fix Process"
+        description="A simple, transparent, diagnostic-first process. Measure the leaks, patch the leaks, and multiply your revenue. Learn how Source X recovers $10,000+ in hidden clinic revenue."
+        keywords="clinic revenue recovery process, clinic automation process, how AI clinic fix works"
       />
 
       <div className="min-h-screen bg-[#0B0B0D] text-white pt-24">
@@ -19,10 +19,10 @@ export default function HowItWorksPage() {
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center mb-20">
               <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                The $10K Clinic Fix Process
+                How Source X Fixes Your Revenue Leaks
               </h1>
               <p className="text-xl text-gray-300">
-                From revenue leak to fully-booked clinic in 30 days
+                A simple, transparent, diagnostic-first process.
               </p>
             </div>
 
@@ -32,31 +32,10 @@ export default function HowItWorksPage() {
 
                 <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
                   <div className="md:text-right">
-                    <div className="inline-block bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] text-white px-6 py-2 rounded-full font-bold mb-4">
-                      Days 1 to 2
-                    </div>
-                    <h2 className="text-4xl font-bold mb-4">AI Audit + ROI Snapshot Delivered</h2>
+                    <h2 className="text-4xl font-bold mb-4">Step 1: Measure the Leaks</h2>
                     <p className="text-lg text-gray-300 mb-6">
-                      We analyze your clinic's current systems, missed opportunities, and revenue leaks. You receive a personalized ROI snapshot showing exactly where you're losing money.
+                      We audit your missed calls, no-shows, reply delays, and conversion drop-offs. You receive a complete ROI Snapshot within 48 hours.
                     </p>
-                    <ul className="space-y-3 text-gray-400">
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Call tracking and analysis</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>No-show pattern identification</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Website conversion audit</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Detailed revenue opportunity report</span>
-                      </li>
-                    </ul>
                   </div>
                   <div className="relative">
                     <div className="absolute -left-6 md:-left-12 top-1/2 transform -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-full flex items-center justify-center font-bold text-2xl z-10">
@@ -64,9 +43,9 @@ export default function HowItWorksPage() {
                     </div>
                     <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 ml-8 md:ml-0">
                       <div className="text-5xl mb-4">📊</div>
-                      <h3 className="text-2xl font-bold mb-2">What You Get</h3>
+                      <h3 className="text-2xl font-bold mb-2">What Happens</h3>
                       <p className="text-gray-400">
-                        A complete breakdown of where your clinic is losing money, with specific dollar amounts and actionable recommendations.
+                        We analyze your call data and workflow to identify your top revenue leaks and quantify the impact.
                       </p>
                     </div>
                   </div>
@@ -81,66 +60,24 @@ export default function HowItWorksPage() {
                       <div className="text-5xl mb-4">⚙️</div>
                       <h3 className="text-2xl font-bold mb-2">What Happens</h3>
                       <p className="text-gray-400">
-                        Our team installs and configures your custom AI automation system. No disruption to your current operations.
+                        Our team deploys AI call response, booking optimization, and follow-up automations to recover lost revenue quickly.
                       </p>
                     </div>
                   </div>
                   <div className="md:order-1">
-                    <div className="inline-block bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] text-white px-6 py-2 rounded-full font-bold mb-4">
-                      Days 3 to 7
-                    </div>
-                    <h2 className="text-4xl font-bold mb-4">System Installed</h2>
+                    <h2 className="text-4xl font-bold mb-4">Step 2: Patch the Leaks</h2>
                     <p className="text-lg text-gray-300 mb-6">
-                      We build and deploy your custom automation system. Everything is handled by our team, with zero technical work required from you.
+                      We deploy AI call response, booking optimization, and follow-up automations to recover lost revenue quickly.
                     </p>
-                    <ul className="space-y-3 text-gray-400">
-                      <li className="flex items-center gap-3">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>AI phone answering setup</span>
-                      </li>
-                      <li className="flex items-center gap-3">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Automated appointment reminders</span>
-                      </li>
-                      <li className="flex items-center gap-3">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Patient reactivation campaigns</span>
-                      </li>
-                      <li className="flex items-center gap-3">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Website booking automation</span>
-                      </li>
-                    </ul>
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <div className="md:text-right">
-                    <div className="inline-block bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] text-white px-6 py-2 rounded-full font-bold mb-4">
-                      Days 8 to 30
-                    </div>
-                    <h2 className="text-4xl font-bold mb-4">ROI Tracked and Optimized</h2>
+                    <h2 className="text-4xl font-bold mb-4">Step 3: Multiply Your Revenue</h2>
                     <p className="text-lg text-gray-300 mb-6">
-                      We monitor performance daily and optimize for maximum results. You receive weekly reports showing booked consults, recovered revenue, and system performance.
+                      With your operations fixed, you can finally scale without waste. We discuss next steps only after you see ROI from Stage 1.
                     </p>
-                    <ul className="space-y-3 text-gray-400">
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Daily performance monitoring</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Weekly ROI reports</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>Continuous optimization</span>
-                      </li>
-                      <li className="flex items-center gap-3 md:justify-end">
-                        <CheckCircle className="text-[#3B82F6] flex-shrink-0" size={20} />
-                        <span>25 consult guarantee tracked</span>
-                      </li>
-                    </ul>
                   </div>
                   <div className="relative">
                     <div className="absolute -left-6 md:-left-12 top-1/2 transform -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-full flex items-center justify-center font-bold text-2xl z-10">
@@ -148,9 +85,9 @@ export default function HowItWorksPage() {
                     </div>
                     <div className="bg-[#111111] p-8 rounded-3xl border border-white/10 ml-8 md:ml-0">
                       <div className="text-5xl mb-4">📈</div>
-                      <h3 className="text-2xl font-bold mb-2">The Result</h3>
+                      <h3 className="text-2xl font-bold mb-2">What Happens</h3>
                       <p className="text-gray-400">
-                        A fully-booked clinic with predictable revenue, freed up staff time, and systems that run themselves.
+                        Your clinic operates efficiently with recovered revenue and systems that support growth without overwhelming your team.
                       </p>
                     </div>
                   </div>
@@ -167,11 +104,10 @@ export default function HowItWorksPage() {
                   Get your free ROI snapshot and see exactly where your clinic is losing money.
                 </p>
                 <button
-                  onClick={() => openForm('free_audit')}
-                  data-cta="free_audit"
+                  onClick={() => navigate('/clinic-fix')}
                   className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
                 >
-                  Book My Free Audit
+                  Claim My Free $10K Clinic Fix
                   <ArrowRight size={20} />
                 </button>
               </div>

@@ -1,40 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Search, Settings, Zap, TrendingUp } from 'lucide-react';
+import { Search, Settings, TrendingUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const phases = [
   {
     icon: Search,
-    title: 'Revenue Leak Detection with AI Business Analysis',
-    phase: 'PHASE 1: AI Business Automation Audit (Week 1)',
-    description: 'We identify hidden automation opportunities worth $10K+ annually in your current business processes. Our AI business audit reveals automation potential most business owners never discover—from lead generation gaps to customer support inefficiencies.',
+    number: '1',
+    title: 'Measure the Leaks',
+    description: 'Free AI Audit + ROI Snapshot. We analyze missed calls, no-shows, slow replies, and revenue drop-off.',
     color: 'blue'
   },
   {
     icon: Settings,
-    title: 'Custom AI Automation Blueprint for Your Industry',
-    phase: 'PHASE 2: Intelligent Business Automation Design (Week 2)',
-    description: 'Custom AI automation workflows engineered specifically for your business model and industry requirements. No cookie-cutter business automation solutions—only transformation blueprints that deliver measurable ROI through intelligent automation systems.',
+    number: '2',
+    title: 'Patch the Leaks',
+    description: 'We deploy your custom AI operations system to fix the highest-profit leaks first.',
     color: 'purple'
   },
   {
-    icon: Zap,
-    title: 'Zero-Disruption AI System Deployment',
-    phase: 'PHASE 3: Seamless Integration (Week 3-4)',
-    description: 'Deploy advanced AI business automation systems without disrupting a single customer interaction or workflow. Your team won\'t even notice the change—but your bank account will see the business process automation results.',
-    color: 'orange'
-  },
-  {
     icon: TrendingUp,
-    title: 'Continuous AI-Powered Profit Optimization',
-    phase: 'PHASE 4: Growth Optimization (Ongoing)',
-    description: 'Continuous refinement and scaling support to maximize your ROI and business growth through intelligent automation. We don\'t just set it and forget it—we optimize your AI business automation until you\'re unstoppable.',
+    number: '3',
+    title: 'Multiply Your Revenue',
+    description: 'Once your operations stop leaking money, we help you scale responsibly.',
     color: 'green'
   }
 ];
 
 const TransformationFramework = () => {
+  const navigate = useNavigate();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -73,19 +68,16 @@ const TransformationFramework = () => {
           className="max-w-4xl mx-auto text-center mb-16"
         >
           <h2 className="section-heading">
-            <span className="text-white">The Source X AI Business</span>{' '}
-            <span className="gradient-blue">Transformation Framework™</span>
+            <span className="text-white">The 3-Step</span>{' '}
+            <span className="gradient-blue">Source X Process</span>
           </h2>
-          <p className="enhanced-subheading section-subheading">
-            From business chaos to AI-powered profit machine in 30 days
-          </p>
         </motion.div>
 
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
         >
           {phases.map((phase, index) => (
             <motion.div
@@ -94,14 +86,25 @@ const TransformationFramework = () => {
               className="bg-[#0a0a0a] p-8 rounded-xl border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all duration-300"
             >
               <div className="relative z-10">
-                <phase.icon className={`w-8 h-8 text-${phase.color}-500 mb-4`} />
-                <p className="enhanced-subheading-small text-blue-400 font-semibold mb-2">{phase.phase}</p>
-                <h3 className="service-title-subheading text-white mb-4">{phase.title}</h3>
+                <div className={`w-12 h-12 bg-${phase.color}-500/20 rounded-full flex items-center justify-center mb-4`}>
+                  <span className={`text-2xl font-bold text-${phase.color}-500`}>{phase.number}</span>
+                </div>
+                <h3 className="service-title-subheading text-white mb-4">{`Step ${phase.number} — ${phase.title}`}</h3>
                 <p className="enhanced-subheading-small text-gray-400 leading-relaxed">{phase.description}</p>
               </div>
             </motion.div>
           ))}
         </motion.div>
+
+        <div className="text-center">
+          <button
+            onClick={() => navigate('/clinic-fix')}
+            className="px-8 py-4 bg-[#3B82F6] text-white font-semibold rounded-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
+            aria-label="Get My Free ROI Snapshot"
+          >
+            Get My Free ROI Snapshot
+          </button>
+        </div>
       </div>
     </section>
   );

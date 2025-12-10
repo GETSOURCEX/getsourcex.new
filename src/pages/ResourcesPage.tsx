@@ -1,17 +1,17 @@
 import React from 'react';
 import { ArrowRight, FileText, TrendingDown } from 'lucide-react';
-import { useForm } from '../context/FormContext';
+import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 export default function ResourcesPage() {
-  const { openForm } = useForm();
+  const navigate = useNavigate();
 
   return (
     <>
       <SEO
-        title="Clinic Revenue Leak Report | Source X"
-        description="Uncover $10K+ in hidden monthly profit without hiring or ads. Get your free clinic revenue leak report from Source X."
-        keywords="clinic revenue leak, clinic profit analysis, hidden clinic revenue"
+        title="Free Resources for GTA Med-Spas | Clinic Revenue Leak Report"
+        description="Learn where clinics lose $25,000–$45,000/month and how to stop it. Free clinic revenue leak report and AI transformation blueprint from Source X."
+        keywords="clinic revenue leak, clinic profit analysis, hidden clinic revenue, free clinic resources"
       />
 
       <div className="min-h-screen bg-[#0B0B0D] text-white pt-24">
@@ -19,21 +19,26 @@ export default function ResourcesPage() {
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-16">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  Free Resources for GTA Med-Spas
+                </h1>
+              </div>
+
+              <div className="text-center mb-16">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-2xl mb-6">
                   <FileText className="w-10 h-10" />
                 </div>
 
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
                   The Clinic Revenue Leak Report
-                </h1>
+                </h2>
 
                 <p className="text-2xl text-gray-300 mb-8">
-                  Uncover $10K+ in hidden monthly profit without hiring or ads.
+                  Learn where clinics lose $25,000–$45,000/month, and how to stop it.
                 </p>
 
                 <button
-                  onClick={() => openForm('leak_report')}
-                  data-cta="leak_report"
+                  onClick={() => navigate('/clinic-fix')}
                   className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
                 >
                   See My Leak Report
@@ -158,11 +163,10 @@ export default function ResourcesPage() {
                   Get your free revenue leak report in 48 hours.
                 </p>
                 <button
-                  onClick={() => openForm('leak_report')}
-                  data-cta="leak_report"
+                  onClick={() => navigate('/clinic-fix')}
                   className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-10 py-5 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center gap-2 text-lg"
                 >
-                  Get My Free Report Now
+                  Claim My Free $10K Clinic Fix
                   <ArrowRight size={20} />
                 </button>
 

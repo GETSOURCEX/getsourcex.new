@@ -1,38 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Globe, Users, Star, DollarSign } from 'lucide-react';
+import { Phone, UserX, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const GlobalAuthoritySection = () => {
+  const navigate = useNavigate();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
 
-  const stats = [
+  const leaks = [
     {
-      icon: DollarSign,
-      number: "500+",
-      label: "Hours Automated Weekly",
+      icon: Phone,
+      title: "Missed Calls",
+      description: "Every 10 missed calls = $4,000 lost. Most clinics miss 30–50 calls monthly.",
       color: "blue"
     },
     {
-      icon: Globe,
-      number: "15+",
-      label: "Countries Served",
-      color: "green"
+      icon: UserX,
+      title: "No-Shows",
+      description: "25–40% of booked patients don't show. Most of that revenue is unrecoverable.",
+      color: "red"
     },
     {
-      icon: Star,
-      number: "98%",
-      label: "Client Satisfaction Rate",
+      icon: Clock,
+      title: "Slow Replies",
+      description: "78% of patients book with the clinic that replies first. If you respond late, you lose the client.",
       color: "yellow"
-    },
-    {
-      icon: Users,
-      number: "$2M+",
-      label: "Revenue Generated for Clients",
-      color: "purple"
     }
   ];
 
@@ -69,14 +65,11 @@ const GlobalAuthoritySection = () => {
           className="max-w-4xl mx-auto text-center mb-16"
         >
           <h2 className="section-heading">
-            <span className="text-white">Global AI Automation</span>{' '}
-            <span className="gradient-blue">Authority</span>
+            <span className="text-white">Your Clinic's</span>{' '}
+            <span className="gradient-blue">Hidden Revenue Leaks</span>
           </h2>
-          <p className="enhanced-subheading text-[#cccccc] leading-relaxed mb-8">
-            <strong>Trusted by Businesses Across 15+ Countries</strong>
-          </p>
           <p className="enhanced-subheading text-[#cccccc] leading-relaxed">
-            Source X has become the go-to AI automation partner for businesses from Toronto to New York, Vancouver to Los Angeles. Our proven AI business transformation methods are helping companies worldwide eliminate manual work and scale faster with intelligent automation.
+            Most med-spas lose thousands every month and don't even know it. Here are the three biggest culprits:
           </p>
         </motion.div>
 
@@ -84,20 +77,30 @@ const GlobalAuthoritySection = () => {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
         >
-          {stats.map((stat, index) => (
+          {leaks.map((leak, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="bg-[#0a0a0a] p-8 rounded-xl border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all duration-300 text-center"
+              className="bg-[#0a0a0a] p-8 rounded-xl border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all duration-300"
             >
-              <stat.icon className={`w-12 h-12 text-${stat.color}-500 mx-auto mb-4`} />
-              <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
-              <div className="enhanced-subheading-small text-gray-400">{stat.label}</div>
+              <leak.icon className={`w-12 h-12 text-${leak.color}-500 mx-auto mb-4`} />
+              <h3 className="service-title-subheading text-white mb-3">{`Leak ${index + 1} — ${leak.title}`}</h3>
+              <p className="enhanced-subheading-small text-gray-400">{leak.description}</p>
             </motion.div>
           ))}
         </motion.div>
+
+        <div className="text-center">
+          <button
+            onClick={() => navigate('/clinic-fix')}
+            className="px-8 py-4 bg-[#3B82F6] text-white font-semibold rounded-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
+            aria-label="See My Leak Report"
+          >
+            See My Leak Report
+          </button>
+        </div>
       </div>
     </section>
   );

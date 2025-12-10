@@ -20,17 +20,16 @@ const GuaranteeSection = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="section-heading">
-            <span className="text-white">The Source X 90-Day</span>{' '}
-            <span className="gradient-blue">AI Business Transformation Promise</span>
+            <span className="text-white">Our</span>{' '}
+            <span className="gradient-blue">Guarantee</span>
           </h2>
-          
+
           <div className="bg-[#0a0a0a] p-8 rounded-xl border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-shadow duration-300">
             <Shield className="w-12 h-12 text-blue-500 mx-auto mb-6" />
+            <h3 className="service-title-subheading text-white mb-4">The 25 Show-Up Guarantee</h3>
             <p className="enhanced-subheading text-[#cccccc] leading-relaxed">
-              If our <strong>AI automation systems</strong> don't save you 20+ hours per week AND increase revenue by 25% within 90 days, we'll refine them until they do—at no extra cost. That's not just a <strong>business automation guarantee</strong>, that's our obsession with your AI transformation success.
-            </p>
-            <p className="enhanced-subheading-small text-white/70 mt-4">
-              ⏰ Your competitors are already using AI business automation - don't get left behind
+              If we don't deliver 25 booked consults in 30 days, your install is free.<br />
+              No risk. No excuses. No fine print. Just results.
             </p>
           </div>
         </motion.div>

@@ -1,36 +1,38 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Shield, Users, Headphones, Target } from 'lucide-react';
+import { TrendingUp, Clock, Shield, Building } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const reasons = [
   {
-    icon: Shield,
-    title: 'AI Business Transformation Guarantee',
-    description: 'We don\'t get paid until you see measurable results from our AI automation services—your business transformation success is literally our business model.',
+    icon: TrendingUp,
+    title: '48-Hour ROI Snapshot',
+    description: 'See exactly how much profit your clinic is leaking backed by real numbers.',
     color: 'blue'
   },
   {
-    icon: Users,
-    title: 'Proven AI Automation Framework',
-    description: '100+ businesses already scaling with our intelligent automation method—you\'re joining a community of AI-powered winners across Canada and beyond.',
+    icon: Clock,
+    title: 'Fast 3-Day Setup',
+    description: 'We build and deploy everything for you. No training, no disruption.',
     color: 'purple'
   },
   {
-    icon: Headphones,
-    title: 'Complete AI Implementation Support',
-    description: 'From AI system setup to business scaling, we handle every aspect of your automation transformation—you focus on what you do best while AI handles the rest.',
+    icon: Shield,
+    title: 'Guaranteed Results',
+    description: 'If we don\'t produce results, you don\'t pay the install. No fine print.',
     color: 'orange'
   },
   {
-    icon: Target,
-    title: 'Industry-Specific AI Solutions',
-    description: 'Custom AI automation solutions for your specific business model and industry—no generic templates, only tailored intelligent automation systems that deliver ROI.',
+    icon: Building,
+    title: 'Built for Compliance',
+    description: 'PHIPA + PIPEDA compliant. Secure, Canadian-owned infrastructure.',
     color: 'green'
   }
 ];
 
 const WhyChooseSection = () => {
+  const navigate = useNavigate();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -69,16 +71,19 @@ const WhyChooseSection = () => {
           className="max-w-4xl mx-auto text-center mb-16"
         >
           <h2 className="section-heading">
-            <span className="text-white">Why Smart Business Owners Choose</span>{' '}
-            <span className="gradient-blue">Source X AI Automation Over Everyone Else</span>
+            <span className="text-white">Why Clinics Choose</span>{' '}
+            <span className="gradient-blue">Source X</span>
           </h2>
+          <p className="enhanced-subheading text-[#cccccc] leading-relaxed">
+            Built for Med-Spas. Focused on ROI.
+          </p>
         </motion.div>
 
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
         >
           {reasons.map((reason, index) => (
             <motion.div
@@ -94,6 +99,16 @@ const WhyChooseSection = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        <div className="text-center">
+          <button
+            onClick={() => navigate('/clinic-fix')}
+            className="px-8 py-4 bg-[#3B82F6] text-white font-semibold rounded-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:scale-105 transition-all duration-300 cursor-pointer"
+            aria-label="Book My Free Audit"
+          >
+            Book My Free Audit
+          </button>
+        </div>
       </div>
     </section>
   );
