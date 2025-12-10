@@ -234,33 +234,6 @@ const ClinicFix = () => {
                   </div>
                 </div>
 
-                <div className="bg-[#111111] p-6 rounded-2xl border border-white/10">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
-                    Trusted Across the GTA
-                  </h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                        1,400+
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">missed calls recovered</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                        $200K+
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">clinic revenue recovered</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                        48-hour
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">average setup</div>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 rounded-2xl border border-yellow-500/30">
                   <div className="flex items-start gap-4">
                     <Clock className="w-8 h-8 text-yellow-500 flex-shrink-0 mt-1" />
