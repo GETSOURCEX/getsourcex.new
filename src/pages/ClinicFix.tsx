@@ -354,11 +354,8 @@ const ClinicFix = () => {
           <div className="container mx-auto max-w-7xl">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                Trusted by Clinics Across Toronto and the GTA
+                Trusted Across the GTA
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                From physiotherapy and medspas to laser and rehab centers, our systems have helped clinics recover real profit without new ads or staff.
-              </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -366,8 +363,8 @@ const ClinicFix = () => {
                 <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
                   1,400+
                 </div>
-                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Missed Calls Recovered
+                <div className="text-sm font-semibold text-gray-400 tracking-wider">
+                  missed calls recovered
                 </div>
               </div>
 
@@ -375,17 +372,17 @@ const ClinicFix = () => {
                 <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
                   $200K+
                 </div>
-                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  In Client ROI
+                <div className="text-sm font-semibold text-gray-400 tracking-wider">
+                  clinic revenue recovered
                 </div>
               </div>
 
               <div className="bg-[#0B0B0D] p-8 rounded-3xl border border-white/10 hover:border-[#3B82F6]/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105 text-center">
                 <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1] mb-2">
-                  48 Hours
+                  48-hour
                 </div>
-                <div className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Avg. Setup Time
+                <div className="text-sm font-semibold text-gray-400 tracking-wider">
+                  average setup
                 </div>
               </div>
             </div>
