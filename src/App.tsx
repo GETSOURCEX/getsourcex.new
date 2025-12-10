@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import SiteLogo from './components/SiteLogo';
 import HomePage from './pages/HomePage';
 import HowItWorksPage from './pages/HowItWorksPage';
+import ServicesPage from './pages/ServicesPage';
 import ResourcesPage from './pages/ResourcesPage';
 import AboutPage from './pages/AboutPage';
 import ClinicFix from './pages/ClinicFix';
@@ -29,6 +30,9 @@ const App = () => {
               </Link>
               <Link to="/how-it-works" className="text-gray-300 hover:text-white transition-colors">
                 How It Works
+              </Link>
+              <Link to="/services" className="text-gray-300 hover:text-white transition-colors">
+                Services
               </Link>
               <Link to="/resources" className="text-gray-300 hover:text-white transition-colors">
                 Resources
@@ -64,6 +68,13 @@ const App = () => {
                   How It Works
                 </Link>
                 <Link
+                  to="/services"
+                  className="text-gray-300 hover:text-white transition-colors"
+                  onClick={handleMobileNavClick}
+                >
+                  Services
+                </Link>
+                <Link
                   to="/resources"
                   className="text-gray-300 hover:text-white transition-colors"
                   onClick={handleMobileNavClick}
@@ -88,6 +99,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/clinic-fix" element={<ClinicFix />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
