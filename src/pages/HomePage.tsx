@@ -36,12 +36,12 @@ export default function HomePage() {
                 Your Clinic Is Leaking $10,000+ Every Month.
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#6366F1]">
-                  We Fix It in 10 Days or You Don't Pay.
+                  We Show You Exactly Where, And Fix It Fast.
                 </span>
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                Find and recover hidden profit in your clinic with invisible AI that books patients, cuts no-shows, and proves ROI within 48 hours.
+                Stop losing revenue to missed calls, no-shows, and slow follow-ups. Our AI-driven operations recover hidden profit without hiring new staff.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -50,7 +50,7 @@ export default function HomePage() {
                   data-cta="roi_snapshot"
                   className="group bg-gradient-to-r from-[#3B82F6] to-[#6366F1] text-white font-semibold px-8 py-4 rounded-xl hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 inline-flex items-center justify-center gap-2 text-lg animate-pulse-slow"
                 >
-                  Get My Free ROI Snapshot
+                  Claim My Free $10K Clinic Fix
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
 
